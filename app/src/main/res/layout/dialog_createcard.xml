@@ -9,6 +9,7 @@
     android:id="@+id/tvReadCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="카드를 기기에 가져다대세요\nRFID EX \n1111:1233:2222:1234"
-    android:textSize="20dp"/>
+    android:lines="5"
+    android:text="카드를 기기에 가져다대세요"
+    android:textSize="25dp"/>
 </LinearLayout>

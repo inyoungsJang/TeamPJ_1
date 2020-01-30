@@ -9,17 +9,63 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/tvBluetoothOnOff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#55555555"
         android:gravity="center_horizontal"
         android:text="TEAM PROJECT TEST"
-        android:textSize="35dp" />
+        android:textSize="15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/singup"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="singUp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="|" />
+
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="login" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="|" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="etc" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,13 +94,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="50dp" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/card"
         android:layout_width="250dp"
         android:layout_height="400dp"
-        android:background="#99555555"
+        android:background="#55555555"
         android:gravity="center">
 
         <TextView

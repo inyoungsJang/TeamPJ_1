@@ -1,6 +1,7 @@
 package com.example.teampj_1;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
@@ -9,15 +10,17 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,17 +37,21 @@ public class MainActivity extends AppCompatActivity {
     TextView tvReadCard;
     //LinearLayout dialogAct
     String read;
+    TextView tvBluetoothOnOff;
 
     Button btnSend;
     EditText edtSendMsg;
     ImageView ivBluetooth;
     TextView tvReceive;
     ListView listview;
-
-
     ImageView ivBT;
+    TextView singup, login;
     //    EditText edtSendMsg;
 //    Button btnSend;
+
+    SQLiteDatabase sqlDB;
+    BluetoothDB.bluetoothUserDB bluetoothUserDB;
+    //  BluetoothDB.bluetoothUserDB bluetoothUserDB;
 
     BluetoothAdapter bluetoothAdapter;
     static final int REQUEST_ENABLE_BT = 10;
@@ -59,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
     char mCharDelimiter = '\n';
     byte readBuffer[];
     int readBufferPosition;
-
-
     View dialogView;
 
     @Override
@@ -68,11 +73,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvReceive = (TextView) findViewById(R.id.tvReceive);
+        singup = (TextView) findViewById(R.id.singup);
+        login = (TextView) findViewById(R.id.login);
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         tvReceive = (TextView) findViewById(R.id.tvReceive);
         //  listview = (ListView) findViewById(R.id.listview);
+        tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
+
+        bluetoothUserDB = new BluetoothDB().bluetoothUserDB;
+
 
         card = (LinearLayout) findViewById(R.id.card);
         checkBluetooth();
@@ -90,7 +101,28 @@ public class MainActivity extends AppCompatActivity {
                 edtSendMsg.setText("");
             }
         });
-    }
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        //  bluetoothUserDB = new BluetoothDB()
+
+        //sqlDB2 = userFileDB.getReadableDatabase(); //읽다
+
+        singup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //singup ACT
+                startActivity(intent);
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //login ACT
+                startActivity(intent);
+            }
+        });
+    } //onCreate End
 
     void createCard() { //신규카드 등록
         AlertDialog.Builder builder_createCard = new AlertDialog.Builder(this);
@@ -115,10 +147,19 @@ public class MainActivity extends AppCompatActivity {
                 showToast("카드를 등록하였습니다");
             }
         });
-        tvReadCard.setText(read); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
+     //   tvReadCard.setText(read); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
+        // TODO: 2020-01-28 RFID값을 DB에 저장해야함
         builder_createCard.setView(dialogView);
         builder_createCard.setCancelable(false);
         builder_createCard.show();
+    }
+
+    void bluetoothDB(String id, String password, String name, String rfid, String email) { //id,password,name,rfid,email 값 받아야함
+        //sqlDB = bluetoothUserDB.getWritableDatabase(); //쓰고읽기
+        sqlDB = bluetoothUserDB.getWritableDatabase(); //쓰고읽기
+        sqlDB.execSQL("INSERT OR REPLACE INTO bluetoothUserTBL (id,password,name,rfid,email) VALUES ( '" + id + "','" + password + "','" + name + "','" + rfid + "','" + email + "');");
+        // TODO: 2020-01-23 main.Java에서 bluetoothDB의 매개변수값을 넣어줘야함
+        sqlDB.close();
     }
 
     void checkBluetooth() {
@@ -142,9 +183,8 @@ public class MainActivity extends AppCompatActivity {
         if (mPairedDeviceCount == 0) { //연결된 디바이스가 없는경우
             showToast("연결할 블루투스 장치가 하나도 없습니다");
         } else {
-            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this); //Dialog 생성
+            AlertDialog.Builder builder = new AlertDialog.Builder(this); //Dialog 생성
             builder.setTitle("블루투스 장치 선택");
-            //  builder.setIcon(R.drawable.android);
             List<String> listItems = new ArrayList<String>(); //동적배열
             for (BluetoothDevice device : mDevices) {
                 listItems.add(device.getName()); //페어링된 장치이름
@@ -211,14 +251,35 @@ public class MainActivity extends AppCompatActivity {
                                     byte encodeBytes[] = new byte[readBufferPosition]; //
                                     System.arraycopy(readBuffer, 0, encodeBytes, 0, encodeBytes.length);
                                     final String data = new String(encodeBytes, "UTF-8"); //US-ASCII : 아스키코드 //UTF-8 :한글안깨짐
-
+                                    //  final List<String> datas = new ArrayList<>();
 
                                     readBufferPosition = 0; //
                                     handler.post(new Runnable() { //아두이노에 작성한 전송부분을 수신하여 작업할 곳
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
-                                            tvReceive.setText(data + mStrDelimiter); //데이타 (?
-                                            read = tvReceive.getText().toString()+"RF값 보내줘어엉";
+                                            tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
+
+                                          //  read=data;
+                                            char array[] = data.toCharArray(); //
+                                            Switch s = null;
+
+                                            switch (array[0]) {
+                                                case '1':
+                                                  //  s = sw1;
+                                                    break;
+                                                case '2':
+                                                   // s = sw2;
+                                                    break;
+                                                case '3':
+                                            //        s = sw3;
+                                            }
+                                            if (s != null) { //스위치값이 null이 아니면 //값을 받음
+                                                if (array[1] == '0') { //0(버튼안누름)이면 false
+                                                    s.setChecked(false);
+                                                } else if (array[1] == '1') { //1(버튼누름)이면 true
+                                                    s.setChecked(true);
+                                                }
+                                            }
                                         }
                                     });
                                 } else {
@@ -254,10 +315,10 @@ public class MainActivity extends AppCompatActivity {
             mOutputStream = mSocket.getOutputStream(); //송신 //ex led 조종
             mInputStream = mSocket.getInputStream(); //수신 //ex 온도습도 값
             beginListenForData(); //
-            // ivBluetooth.setImageResource(R.drawable.bluetooth_icon);
+            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 0, 0, 255));
         } catch (Exception e) {
             showToast("블루투스 연결 중 오류가 발생하였습니다");
-            //  ivBluetooth.setImageResource(R.drawable.bluetooth_grayicon);
+            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 55, 55, 55)); //99555555
         }
     }
 

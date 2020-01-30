@@ -10,14 +10,15 @@ import android.os.Bundle;
 
 public class BluetoothDB extends AppCompatActivity {
     SQLiteDatabase sqlDB;
-    bluetoothUserDB bludtoothUserDB;
+    bluetoothUserDB bluetoothUserDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth_db);
 
-        bludtoothUserDB = new bluetoothUserDB(getApplicationContext());
+           bluetoothUserDB = new bluetoothUserDB(getApplicationContext());
+
 
     }
 
@@ -27,17 +28,17 @@ public class BluetoothDB extends AppCompatActivity {
         }
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE bluetoothUserTBL (id TEXT(20) NOT NULL PRIMARY KEY, password TEXT(20) NOT NULL, name TEXT(50) NOT NULL, rfid TEXT(50) NOT NULL, email TEXT(10) NOT NULL);"); //bluetoothUserTBL Table생성
+            db.execSQL("CREATE TABLE bluetoothUserTBL (id TEXT(20) NOT NULL PRIMARY KEY, password TEXT(20) NOT NULL, name TEXT(50) NOT NULL, rfid TEXT(50), email TEXT(10) NOT NULL);"); //bluetoothUserTBL Table생성
         }
         @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {        }
+        @Override
+        public SQLiteDatabase getWritableDatabase() {
+            return super.getWritableDatabase();
         }
-    }
-
-    void bluetoothDB(String id, String password, String name, String rfid, String email) { //id,password,name,rfid,email 값 받아야함
-        sqlDB = bludtoothUserDB.getWritableDatabase();
-        sqlDB.execSQL("INSERT OR REPLACE INTO bluetoothUserTBL (id,password,name,rfid,email) VALUES ( '" + id + "','" + password + "','" + name + "','" + rfid + "','" + email + "');");
-        // TODO: 2020-01-23 main.Java에서 bluetoothDB의 매개변수값을 넣어줘야함 
-        sqlDB.close();
+        @Override
+        public SQLiteDatabase getReadableDatabase() {
+            return super.getReadableDatabase();
+        }
     }
 }
