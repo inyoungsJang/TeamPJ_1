@@ -34,10 +34,11 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout card;
-    TextView tvReadCard;
+    TextView tvReadCard,tvTextReadCard;
     //LinearLayout dialogAct
     String read;
     TextView tvBluetoothOnOff;
+    ImageView ivRFID;
 
     Button btnSend;
     EditText edtSendMsg;
@@ -79,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         tvReceive = (TextView) findViewById(R.id.tvReceive);
+        tvTextReadCard=(TextView)findViewById(R.id.tvTextReadCard);
         //  listview = (ListView) findViewById(R.id.listview);
         tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
+        ivRFID=(ImageView)findViewById(R.id.ivRFID);
 
         bluetoothUserDB = new BluetoothDB().bluetoothUserDB;
 
@@ -251,14 +254,14 @@ public class MainActivity extends AppCompatActivity {
                                     byte encodeBytes[] = new byte[readBufferPosition]; //
                                     System.arraycopy(readBuffer, 0, encodeBytes, 0, encodeBytes.length);
                                     final String data = new String(encodeBytes, "UTF-8"); //US-ASCII : 아스키코드 //UTF-8 :한글안깨짐
-                                    //  final List<String> datas = new ArrayList<>();
 
                                     readBufferPosition = 0; //
                                     handler.post(new Runnable() { //아두이노에 작성한 전송부분을 수신하여 작업할 곳
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
                                             tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
-
+                                            tvTextReadCard.setText("");
+                                            ivRFID.setVisibility(View.INVISIBLE);
                                           //  read=data;
                                             char array[] = data.toCharArray(); //
                                             Switch s = null;

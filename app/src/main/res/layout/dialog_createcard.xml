@@ -2,14 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
-    android:orientation="vertical">
-<TextView
-    android:gravity="center"
-    android:id="@+id/tvReadCard"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:lines="5"
-    android:text="카드를 기기에 가져다대세요"
-    android:textSize="25dp"/>
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp">
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTextReadCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="카드를 기기에 가져다대세요"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/ivRFID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rfidimg" />
+
+        <TextView
+            android:id="@+id/tvReadCard"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:gravity="center"
+            android:text="test"
+            android:textSize="25dp" />
+    </FrameLayout>
 </LinearLayout>
