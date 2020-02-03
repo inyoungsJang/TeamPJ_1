@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,17 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnSend;
     EditText edtSendMsg;
-    ImageView ivBluetooth;
     TextView tvReceive;
-    ListView listview;
     ImageView ivBT;
     TextView singup, login;
-    //    EditText edtSendMsg;
-//    Button btnSend;
 
     SQLiteDatabase sqlDB;
-    BluetoothDB.bluetoothUserDB bluetoothUserDB;
-    //  BluetoothDB.bluetoothUserDB bluetoothUserDB;
+    BluetoothDB btDB;
 
     BluetoothAdapter bluetoothAdapter;
     static final int REQUEST_ENABLE_BT = 10;
@@ -84,11 +80,8 @@ public class MainActivity extends AppCompatActivity {
         //  listview = (ListView) findViewById(R.id.listview);
         tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
         ivRFID=(ImageView)findViewById(R.id.ivRFID);
-
-        bluetoothUserDB = new BluetoothDB().bluetoothUserDB;
-
-
         card = (LinearLayout) findViewById(R.id.card);
+
         checkBluetooth();
         card.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
@@ -107,14 +100,12 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-        //  bluetoothUserDB = new BluetoothDB()
 
-        //sqlDB2 = userFileDB.getReadableDatabase(); //읽다
 
         singup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //singup ACT
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //signup ACT
                 startActivity(intent);
             }
         });
@@ -134,9 +125,8 @@ public class MainActivity extends AppCompatActivity {
         tvReadCard = (TextView) dialogView.findViewById(R.id.tvReadCard);
         //   mDevices = bluetoothAdapter.getBondedDevices();
         //   mPairedDeviceCount = mDevices.size();
+        btDB  = new BluetoothDB(this); //update
 
-        // TODO: 2020-01-23 카드를 갖다댔을떄 RFID 값 받아야함
-        //  readCard();
         builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -148,21 +138,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showToast("카드를 등록하였습니다");
+                btDB.bluetoothUpdateRFIDDB("123-11231-77889"); //update
             }
         });
-     //   tvReadCard.setText(read); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
+
         // TODO: 2020-01-28 RFID값을 DB에 저장해야함
         builder_createCard.setView(dialogView);
         builder_createCard.setCancelable(false);
         builder_createCard.show();
-    }
-
-    void bluetoothDB(String id, String password, String name, String rfid, String email) { //id,password,name,rfid,email 값 받아야함
-        //sqlDB = bluetoothUserDB.getWritableDatabase(); //쓰고읽기
-        sqlDB = bluetoothUserDB.getWritableDatabase(); //쓰고읽기
-        sqlDB.execSQL("INSERT OR REPLACE INTO bluetoothUserTBL (id,password,name,rfid,email) VALUES ( '" + id + "','" + password + "','" + name + "','" + rfid + "','" + email + "');");
-        // TODO: 2020-01-23 main.Java에서 bluetoothDB의 매개변수값을 넣어줘야함
-        sqlDB.close();
     }
 
     void checkBluetooth() {
@@ -254,15 +237,19 @@ public class MainActivity extends AppCompatActivity {
                                     byte encodeBytes[] = new byte[readBufferPosition]; //
                                     System.arraycopy(readBuffer, 0, encodeBytes, 0, encodeBytes.length);
                                     final String data = new String(encodeBytes, "UTF-8"); //US-ASCII : 아스키코드 //UTF-8 :한글안깨짐
-
                                     readBufferPosition = 0; //
                                     handler.post(new Runnable() { //아두이노에 작성한 전송부분을 수신하여 작업할 곳
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
                                             tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
+                                            Log.i("test","tvReadCard.setText(data) 성공");
                                             tvTextReadCard.setText("");
+                                            Log.i("test","tvTextReadCard.setText()성공");
                                             ivRFID.setVisibility(View.INVISIBLE);
-                                          //  read=data;
+                                            Log.i("test","ivRFID.setVisibility(View.INVISBLE) 성공");
+                                           // read=data;
+                                            read="1234-123-44312";
+
                                             char array[] = data.toCharArray(); //
                                             Switch s = null;
 

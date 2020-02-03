@@ -16,10 +16,11 @@ public class SignUpActivity extends AppCompatActivity {
     TextView singUp;
     ImageView imgExit;
 
-    String id, password, email, rfid, name;
+    String id, password, rfid, name;
 
     SQLiteDatabase sqlDB;
-    BluetoothDB.bluetoothUserDB bluetoothUserDB;
+    BluetoothDB btDB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +29,14 @@ public class SignUpActivity extends AppCompatActivity {
 
         edtId = (EditText) findViewById(R.id.edtId);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
-        edtEmail = (EditText) findViewById(R.id.edtEmail);
         edtName = (EditText) findViewById(R.id.edtName);
         imgExit = (ImageView) findViewById(R.id.imgExit);
         singUp = (TextView) findViewById(R.id.singUp);
 
+        btDB  = new BluetoothDB(this); //insert
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
-
-        bluetoothUserDB = new BluetoothDB().bluetoothUserDB;
 
         imgExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +50,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 id = edtId.getText().toString();
                 password = edtPassword.getText().toString();
-                email = edtEmail.getText().toString();
                 name = edtName.getText().toString();
 
                 if (password.equals("")) {
@@ -59,10 +58,8 @@ public class SignUpActivity extends AppCompatActivity {
                     showToast("name null error");
                 } else if (id.equals("")) {
                     showToast("id null error");
-                } else if (email.equals("")) {
-                    showToast("email null error");
                 } else {
-                    bluetoothDB(id, password, name, email);
+                    btDB.bluetoothInsertUserDB(id,password,name); // insert
                     sqlDB.close();
                     showToast("create user");
                 }
@@ -70,13 +67,6 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     } //onCreate END
-
-    void bluetoothDB(String id, String password, String name, String email) { //id,password,name,rfid,email 값 받아야함
-        sqlDB = bluetoothUserDB.getWritableDatabase(); //쓰고읽기
-        sqlDB.execSQL("INSERT OR REPLACE INTO bluetoothUserTBL (id,password,name,email) VALUES ( '" + id + "','" + password + "','" + name + "','" + email + "');");
-        // TODO: 2020-01-23 main.Java에서 bluetoothDB의 매개변수값을 넣어줘야함
-
-    }
 
     void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
