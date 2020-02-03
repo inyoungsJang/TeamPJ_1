@@ -69,13 +69,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvReceive = (TextView) findViewById(R.id.tvReceive);
+
         singup = (TextView) findViewById(R.id.singup);
         login = (TextView) findViewById(R.id.login);
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
-        tvReceive = (TextView) findViewById(R.id.tvReceive);
         tvTextReadCard=(TextView)findViewById(R.id.tvTextReadCard);
         //  listview = (ListView) findViewById(R.id.listview);
         tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
@@ -138,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showToast("카드를 등록하였습니다");
-                btDB.bluetoothUpdateRFIDDB("123-11231-77889"); //update
+                btDB.BluetoothUpdateRFIDDB("123-11231-77889"); //update
             }
         });
 

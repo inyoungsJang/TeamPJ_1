@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                 } else if (id.equals("")) {
                     showToast("id null error");
                 } else {
-                    btDB.bluetoothInsertUserDB(id,password,name); // insert
+                    btDB.BluetoothInsertUserDB(id,password,name); // insert
                     sqlDB.close();
                     showToast("create user");
                 }
