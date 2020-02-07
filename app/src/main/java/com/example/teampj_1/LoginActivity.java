@@ -3,6 +3,7 @@ package com.example.teampj_1;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -43,22 +44,26 @@ public class LoginActivity extends AppCompatActivity {
                 String password = edtPassword.getText().toString();
 
                 if (password.equals("")) {
-                    showToast("password null error");
+                    showToast("ID PASSWORD를 입력해주세요");
                 } else if (id.equals("")) {
-                    showToast("id null error");
+                    showToast("ID PASSWORD를 입력해주세요");
                 } else {
                     sqlDB = btDB.getReadableDatabase(); //읽다
                     Cursor cUser = sqlDB.rawQuery("SELECT id,password FROM bluetoothUserTBL WHERE id='" + id + "';", null);
                     if (cUser.moveToFirst()) { //디비가 존재한다면
+                        int loginSuccess; //로그인성공시 특정값을 메인에넘겨줌으로써 로그인되었다는 확인을 받음
                         String strId, strPassword;
                         strId = cUser.getString(0);
                         strPassword = cUser.getString(1);
                         if (id.equals(strId) && password.equals(strPassword)) { //동일하면
                             showToast("로그인을 하였습니다");
+                            loginSuccess = 1;
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.putExtra("piLOGIN", loginSuccess);
+                            startActivity(intent);
                             finish(); //현재창 종료하기
                         } else {
                             showToast("비밀번호를 다시한번 확인해주세요.");
-                            Log.i("test", "비번틀림" + strId);
                         }
                     } else {
                         showToast("회원 정보가 없습니다.");

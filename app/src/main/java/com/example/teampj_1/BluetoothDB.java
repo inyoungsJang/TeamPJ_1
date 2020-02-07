@@ -58,19 +58,19 @@ public class BluetoothDB extends SQLiteOpenHelper {
     }
 
 
-    public void BluetoothLoginDB(String id, String password){ //로그인
-        String id1; //
-        Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL;", null);
-
-        if (cursor.moveToFirst() && cursor != null) {
-            id1 = cursor.getString(0);
-            sqlDB.rawQuery("SELECT id='" + id+ "',password='"+password+"' FROM bluetoothUserTBL WHERE id='" + id1 + "' ;",null);//select
-        } else {
-            Toast.makeText(context, "회원가입을 먼저 진행 해주세요.", Toast.LENGTH_SHORT).show();
-        }
-        sqlDB.close();
-        cursor.close();
-    }
+//    public void BluetoothLoginDB(String id, String password){ //로그인
+//        String id1; //
+//        Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL;", null);
+//
+//        if (cursor.moveToFirst() && cursor != null) {
+//            id1 = cursor.getString(0);
+//            sqlDB.rawQuery("SELECT id='" + id+ "',password='"+password+"' FROM bluetoothUserTBL WHERE id='" + id1 + "' ;",null);//select
+//        } else {
+//            Toast.makeText(context, "회원가입을 먼저 진행 해주세요.", Toast.LENGTH_SHORT).show();
+//        }
+//        sqlDB.close();
+//        cursor.close();
+//    }
 
     public void bluetoothOverlapDB(){ //계정 중복확인
 

@@ -35,11 +35,13 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     LinearLayout card;
-    TextView tvReadCard,tvTextReadCard;
+    TextView tvReadCard, tvTextReadCard;
     //LinearLayout dialogAct
     String read;
     TextView tvBluetoothOnOff;
     ImageView ivRFID;
+    int loginSuccess;
+    String strLoginStatus;
 
     Button btnSend;
     EditText edtSendMsg;
@@ -75,13 +77,38 @@ public class MainActivity extends AppCompatActivity {
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
-        tvTextReadCard=(TextView)findViewById(R.id.tvTextReadCard);
+        tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
         //  listview = (ListView) findViewById(R.id.listview);
         tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
-        ivRFID=(ImageView)findViewById(R.id.ivRFID);
+        ivRFID = (ImageView) findViewById(R.id.ivRFID);
         card = (LinearLayout) findViewById(R.id.card);
 
-        checkBluetooth();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
+        strLoginStatus = (String) tvLogin.getText();
+        Log.i("test", "로그인정보" + strLoginStatus);
+        switch (strLoginStatus) {
+            case "login":
+                Intent getIntent = getIntent();
+                loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
+                if (loginSuccess == 1) {
+                    tvLogin.setText("Logout");
+                    Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
+                }
+                break;
+//            case "Logout":
+//                loginSuccess = 0;
+//                if (loginSuccess == 0) {
+//                    tvLogin.setText("LogIn");
+//                    Log.i("test", "로그아웃성공할시 값이 0있어야햄" + loginSuccess);
+//                    Intent putIntent = new Intent(getApplicationContext(), LoginActivity.class);
+//                    putIntent.putExtra("piLOGOUT", loginSuccess);
+//                    startActivity(putIntent);
+//                }
+//                break;
+        }
+
         card.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
             public void onClick(View v) {
@@ -97,27 +124,46 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
 
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //signup ACT
                 startActivity(intent);
-                // TODO: 2020-02-07 1.signup act에서 로그인을 성공하면 "LogOut" 문자를 putIntent로 보냄. 2. getIntent로 setText
-                //tvSignup.setText("");
 
             }
         });
+
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //login ACT
+                switch (strLoginStatus) {
+                    case "Logout":
+                        loginSuccess = 0;
+                        if (loginSuccess == 0) {
+                            tvLogin.setText("LogIn");
+                            Log.i("test", "로그아웃성공할시 값이 0있어야햄" + loginSuccess);
+                            Intent putIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                            putIntent.putExtra("piLOGOUT", loginSuccess);
+                            showToast("로그아웃 되었습니다");
+                            startActivity(putIntent);
+                        }
+                        break;
+                }
                 startActivity(intent);
             }
         });
+
+//        Intent getIntent = getIntent();
+//        loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
+//        if (loginSuccess == 1) {
+//            tvLogin.setText("LogOut");
+//            Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
+        //  finish();
+        // TODO: 2020-02-07 재연결 막아야함
+
+        checkBluetooth();
     } //onCreate End
 
     void createCard() { //신규카드 등록
@@ -127,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
         tvReadCard = (TextView) dialogView.findViewById(R.id.tvReadCard);
         //   mDevices = bluetoothAdapter.getBondedDevices();
         //   mPairedDeviceCount = mDevices.size();
-        btDB  = new BluetoothDB(this); //update
+        btDB = new BluetoothDB(this); //update
 
         builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
@@ -135,13 +181,22 @@ public class MainActivity extends AppCompatActivity {
                 showToast("등록을 취소하였습니다");
             }
         });
-        // TODO: 2020-01-23 등록버튼말고 tvReadCard 에 띄어진 항목 터치시 등록으로
         builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //showToast("카드를 등록하였습니다");
-                btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update
-                // TODO: 2020-02-07 로그인이되어있는 상태여야함. 로그인되면 true값을 받아내자
+                Intent getIntent = getIntent();
+                loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
+                if (loginSuccess == 1) {
+                    tvLogin.setText("LogOut");
+                    Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
+                    //  finish();
+                    // TODO: 2020-02-07 재연결 막아야함
+                    btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update
+                } else {
+                    showToast("로그인을 먼저 해주세요.");
+                }
+                // TODO: 2020-02-07 로그아웃시 ??값을보냄
             }
         });
 
@@ -204,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) { //승인
                     selectDevice();
                 } else if (resultCode == RESULT_CANCELED) { //취소
-                  showToast("블루투스 연결을 취소하였습니다");
+                    showToast("블루투스 연결을 취소하였습니다");
                 }
                 break;
         }
@@ -245,26 +300,26 @@ public class MainActivity extends AppCompatActivity {
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
                                             tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
-                                            Log.i("test","tvReadCard.setText(data) 성공");
+                                            Log.i("test", "tvReadCard.setText(data) 성공");
                                             tvTextReadCard.setText("");
-                                            Log.i("test","tvTextReadCard.setText()성공");
+                                            Log.i("test", "tvTextReadCard.setText()성공");
                                             ivRFID.setVisibility(View.INVISIBLE);
-                                            Log.i("test","ivRFID.setVisibility(View.INVISBLE) 성공");
-                                           // read=data;
-                                            read="1234-123-44312";
+                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
+                                            // read=data;
+                                            read = "1234-123-44312";
 
                                             char array[] = data.toCharArray(); //
                                             Switch s = null;
 
                                             switch (array[0]) {
                                                 case '1':
-                                                  //  s = sw1;
+                                                    //  s = sw1;
                                                     break;
                                                 case '2':
-                                                   // s = sw2;
+                                                    // s = sw2;
                                                     break;
                                                 case '3':
-                                            //        s = sw3;
+                                                    //        s = sw3;
                                             }
                                             if (s != null) { //스위치값이 null이 아니면 //값을 받음
                                                 if (array[1] == '0') { //0(버튼안누름)이면 false
