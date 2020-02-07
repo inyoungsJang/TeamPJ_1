@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edtSendMsg;
     TextView tvReceive;
     ImageView ivBT;
-    TextView singup, login;
+    TextView tvSignup, tvLogin;
 
     SQLiteDatabase sqlDB;
     BluetoothDB btDB;
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        singup = (TextView) findViewById(R.id.singup);
-        login = (TextView) findViewById(R.id.login);
+        tvSignup = (TextView) findViewById(R.id.tvSignup);
+        tvLogin = (TextView) findViewById(R.id.tvLogin);
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
@@ -101,14 +101,17 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
 
 
-        singup.setOnClickListener(new View.OnClickListener() {
+        tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //signup ACT
                 startActivity(intent);
+                // TODO: 2020-02-07 1.signup act에서 로그인을 성공하면 "LogOut" 문자를 putIntent로 보냄. 2. getIntent로 setText
+                //tvSignup.setText("");
+
             }
         });
-        login.setOnClickListener(new View.OnClickListener() {
+        tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //login ACT
@@ -136,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
         builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showToast("카드를 등록하였습니다");
-                btDB.BluetoothUpdateRFIDDB("123-11231-77889"); //update
+                //showToast("카드를 등록하였습니다");
+                btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update
+                // TODO: 2020-02-07 로그인이되어있는 상태여야함. 로그인되면 true값을 받아내자
             }
         });
 
@@ -200,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) { //승인
                     selectDevice();
                 } else if (resultCode == RESULT_CANCELED) { //취소
-                    showToast("블루투스 연결을 취소하였습니다");
+                  showToast("블루투스 연결을 취소하였습니다");
                 }
                 break;
         }
