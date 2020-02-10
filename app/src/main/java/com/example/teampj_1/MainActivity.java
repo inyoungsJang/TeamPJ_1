@@ -47,13 +47,16 @@ public class MainActivity extends AppCompatActivity {
     EditText edtSendMsg;
     TextView tvReceive;
     ImageView ivBT;
-    TextView tvSignup, tvLogin;
+    TextView tvSignup, tvLogin, tvLogout;
 
     SQLiteDatabase sqlDB;
     BluetoothDB btDB;
 
     BluetoothAdapter bluetoothAdapter;
+
     static final int REQUEST_ENABLE_BT = 10;
+    static final int REQUEST_LOGIN = 100;
+
     int mPairedDeviceCount = 0;
     Set<BluetoothDevice> mDevices;
     BluetoothDevice mRemoteDevice;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     int readBufferPosition;
     View dialogView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvSignup = (TextView) findViewById(R.id.tvSignup);
         tvLogin = (TextView) findViewById(R.id.tvLogin);
+        tvLogout = (TextView) findViewById(R.id.tvLogout);
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
@@ -86,18 +91,24 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        strLoginStatus = (String) tvLogin.getText();
-        Log.i("test", "로그인정보" + strLoginStatus);
-        switch (strLoginStatus) {
-            case "login":
-                Intent getIntent = getIntent();
-                loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
-                if (loginSuccess == 1) {
-                    tvLogin.setText("Logout");
-                    Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
-                }
-                break;
-//            case "Logout":
+        Intent getIntent = getIntent();
+        loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
+
+//        strLoginStatus = (String) tvLogin.getText();
+//        Log.i("test", "로그인정보" + strLoginStatus);
+//        switch (strLoginStatus) {
+//            case "login":
+//                Intent getIntent = getIntent();
+//                loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
+//                if (loginSuccess == 1) { //로그인 검사
+//                    tvLogin.setTextColor(Color.alpha(00));
+//                    tvLogin.setVisibility(View.INVISIBLE); //비활성화
+//                    tvLogout.setTextColor(Color.alpha(256));
+//                    tvLogin.setVisibility(View.VISIBLE); //활성화
+//                    Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
+//                }
+//                break;
+//            case "logout":
 //                loginSuccess = 0;
 //                if (loginSuccess == 0) {
 //                    tvLogin.setText("LogIn");
@@ -107,7 +118,69 @@ public class MainActivity extends AppCompatActivity {
 //                    startActivity(putIntent);
 //                }
 //                break;
-        }
+//        }
+
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (loginSuccess == 0) {  //로그인 전
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                    startActivity(intent); //로그인이된다면 1가져옴
+                    startActivityForResult(intent, REQUEST_LOGIN);
+//                    tvLogin.setText("logout");
+                } else {
+                    showToast("로그아웃되었습니다");
+                    loginSuccess=0;
+                    tvLogin.setText("Login");
+                }
+            }
+        });
+
+
+//        if (tvLogin.getVisibility() == View.VISIBLE) { //로그인이 활성화되어있다면
+//            if (loginSuccess == 1) { //로그인 검사
+//                //    tvLogin.setTextColor(Color.alpha(0));
+//                tvLogin.setTextColor(Color.argb(00, 00, 00, 00));
+//                tvLogin.setVisibility(View.INVISIBLE); //비활성화
+//                //  tvLogout.setTextColor(Color.alpha(255));
+//                tvLogout.setTextColor(Color.argb(255, 00, 00, 00));
+//                tvLogout.setVisibility(View.VISIBLE); //활성화
+//                Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
+//                loginSuccess = 0;
+//                Log.i("test", "로그인성공 후 success에 0대입" + loginSuccess);
+//            }
+//            tvLogin.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //login ACT
+//                    startActivity(intent);
+//
+//                    //notifyDataSetChanged();
+//                }
+//
+//            });
+//        } else if (tvLogout.getVisibility() == View.VISIBLE) { //로그아웃이활성화되어있다면
+//            if (loginSuccess == 0) { //로그인 검사
+//                showToast("로그아웃되었습니다.");
+//                Log.i("test", "로그아웃성공할시 값이 1있어야햄" + loginSuccess);
+//                tvLogout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //   Intent intent = new Intent(getApplicationContext(), LogoutActivity.class);
+//
+//                        //   tvLogin.setTextColor(Color.alpha(255));
+//                        tvLogin.setTextColor(Color.argb(255, 00, 00, 00));
+//                        tvLogin.setVisibility(View.VISIBLE); //활성화
+//                        //  tvLogout.setTextColor(Color.alpha(0));
+//                        tvLogout.setTextColor(Color.argb(00, 00, 00, 00));
+//                        tvLogout.setVisibility(View.INVISIBLE); //비활성화
+//                        Log.i("test", "로그아웃성공할시 값이 1있어야햄" + loginSuccess);
+//                        showToast("로그아웃되었습니다.");
+//                        //  startActivity(intent);
+//                    }
+//                });
+//            }
+//        }
 
         card.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
@@ -134,26 +207,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tvLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //login ACT
-                switch (strLoginStatus) {
-                    case "Logout":
-                        loginSuccess = 0;
-                        if (loginSuccess == 0) {
-                            tvLogin.setText("LogIn");
-                            Log.i("test", "로그아웃성공할시 값이 0있어야햄" + loginSuccess);
-                            Intent putIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                            putIntent.putExtra("piLOGOUT", loginSuccess);
-                            showToast("로그아웃 되었습니다");
-                            startActivity(putIntent);
-                        }
-                        break;
-                }
-                startActivity(intent);
-            }
-        });
 
 //        Intent getIntent = getIntent();
 //        loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
@@ -185,10 +238,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //showToast("카드를 등록하였습니다");
-                Intent getIntent = getIntent();
-                loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
+//                Intent getIntent = getIntent();
+//                loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
                 if (loginSuccess == 1) {
-                    tvLogin.setText("LogOut");
+                    // tvLogin.setText("LogOut");
                     Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
                     //  finish();
                     // TODO: 2020-02-07 재연결 막아야함
@@ -260,6 +313,17 @@ public class MainActivity extends AppCompatActivity {
                     selectDevice();
                 } else if (resultCode == RESULT_CANCELED) { //취소
                     showToast("블루투스 연결을 취소하였습니다");
+                }
+                break;
+            case REQUEST_LOGIN:
+                if(resultCode == 100) {
+                    showToast("로그인 성공");
+                    tvLogin.setText("Logout");
+                    loginSuccess = 1;
+                } else if(resultCode == 101){
+                    showToast("로그인 실패");
+                    tvLogin.setText("Login");
+                    loginSuccess = 0;
                 }
                 break;
         }
@@ -387,5 +451,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }
+
 
 /////////////////////////////////////

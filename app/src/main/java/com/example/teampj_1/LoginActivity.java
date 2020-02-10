@@ -20,7 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     ImageView imgExit;
 
     BluetoothDB btDB;
-    SQLiteDatabase sqlDB;
+    SQLiteDatabase sqlDB;//로그인성공시 특정값을 메인에넘겨줌으로써 로그인되었다는 확인을 받음
+    private int loginSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
                     sqlDB = btDB.getReadableDatabase(); //읽다
                     Cursor cUser = sqlDB.rawQuery("SELECT id,password FROM bluetoothUserTBL WHERE id='" + id + "';", null);
                     if (cUser.moveToFirst()) { //디비가 존재한다면
-                        int loginSuccess; //로그인성공시 특정값을 메인에넘겨줌으로써 로그인되었다는 확인을 받음
                         String strId, strPassword;
                         strId = cUser.getString(0);
                         strPassword = cUser.getString(1);
@@ -60,7 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                             loginSuccess = 1;
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("piLOGIN", loginSuccess);
-                            startActivity(intent);
+//                            startActivity(intent,);
+                            setResult(100, intent);
                             finish(); //현재창 종료하기
                         } else {
                             showToast("비밀번호를 다시한번 확인해주세요.");
@@ -77,6 +78,10 @@ public class LoginActivity extends AppCompatActivity {
         imgExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                loginSuccess = 0;
+                intent.putExtra("piLOGIN", loginSuccess);
+                setResult(101, intent);
                 finish(); //현재창 종료하기
             }
         });
