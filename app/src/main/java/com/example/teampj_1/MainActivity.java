@@ -81,9 +81,7 @@ public class MainActivity extends AppCompatActivity {
         tvLogout = (TextView) findViewById(R.id.tvLogout);
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
-        //  ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
-        //  listview = (ListView) findViewById(R.id.listview);
         tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
         card = (LinearLayout) findViewById(R.id.card);
@@ -94,40 +92,12 @@ public class MainActivity extends AppCompatActivity {
         Intent getIntent = getIntent();
         loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
 
-//        strLoginStatus = (String) tvLogin.getText();
-//        Log.i("test", "로그인정보" + strLoginStatus);
-//        switch (strLoginStatus) {
-//            case "login":
-//                Intent getIntent = getIntent();
-//                loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
-//                if (loginSuccess == 1) { //로그인 검사
-//                    tvLogin.setTextColor(Color.alpha(00));
-//                    tvLogin.setVisibility(View.INVISIBLE); //비활성화
-//                    tvLogout.setTextColor(Color.alpha(256));
-//                    tvLogin.setVisibility(View.VISIBLE); //활성화
-//                    Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
-//                }
-//                break;
-//            case "logout":
-//                loginSuccess = 0;
-//                if (loginSuccess == 0) {
-//                    tvLogin.setText("LogIn");
-//                    Log.i("test", "로그아웃성공할시 값이 0있어야햄" + loginSuccess);
-//                    Intent putIntent = new Intent(getApplicationContext(), LoginActivity.class);
-//                    putIntent.putExtra("piLOGOUT", loginSuccess);
-//                    startActivity(putIntent);
-//                }
-//                break;
-//        }
-
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (loginSuccess == 0) {  //로그인 전
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                    startActivity(intent); //로그인이된다면 1가져옴
                     startActivityForResult(intent, REQUEST_LOGIN);
-//                    tvLogin.setText("logout");
                 } else {
                     showToast("로그아웃되었습니다");
                     loginSuccess=0;
@@ -135,52 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-//        if (tvLogin.getVisibility() == View.VISIBLE) { //로그인이 활성화되어있다면
-//            if (loginSuccess == 1) { //로그인 검사
-//                //    tvLogin.setTextColor(Color.alpha(0));
-//                tvLogin.setTextColor(Color.argb(00, 00, 00, 00));
-//                tvLogin.setVisibility(View.INVISIBLE); //비활성화
-//                //  tvLogout.setTextColor(Color.alpha(255));
-//                tvLogout.setTextColor(Color.argb(255, 00, 00, 00));
-//                tvLogout.setVisibility(View.VISIBLE); //활성화
-//                Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
-//                loginSuccess = 0;
-//                Log.i("test", "로그인성공 후 success에 0대입" + loginSuccess);
-//            }
-//            tvLogin.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class); //login ACT
-//                    startActivity(intent);
-//
-//                    //notifyDataSetChanged();
-//                }
-//
-//            });
-//        } else if (tvLogout.getVisibility() == View.VISIBLE) { //로그아웃이활성화되어있다면
-//            if (loginSuccess == 0) { //로그인 검사
-//                showToast("로그아웃되었습니다.");
-//                Log.i("test", "로그아웃성공할시 값이 1있어야햄" + loginSuccess);
-//                tvLogout.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //   Intent intent = new Intent(getApplicationContext(), LogoutActivity.class);
-//
-//                        //   tvLogin.setTextColor(Color.alpha(255));
-//                        tvLogin.setTextColor(Color.argb(255, 00, 00, 00));
-//                        tvLogin.setVisibility(View.VISIBLE); //활성화
-//                        //  tvLogout.setTextColor(Color.alpha(0));
-//                        tvLogout.setTextColor(Color.argb(00, 00, 00, 00));
-//                        tvLogout.setVisibility(View.INVISIBLE); //비활성화
-//                        Log.i("test", "로그아웃성공할시 값이 1있어야햄" + loginSuccess);
-//                        showToast("로그아웃되었습니다.");
-//                        //  startActivity(intent);
-//                    }
-//                });
-//            }
-//        }
 
         card.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
@@ -197,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         tvSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,16 +130,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        Intent getIntent = getIntent();
-//        loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
-//        if (loginSuccess == 1) {
-//            tvLogin.setText("LogOut");
-//            Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
-        //  finish();
-        // TODO: 2020-02-07 재연결 막아야함
-
         checkBluetooth();
+
     } //onCreate End
 
     void createCard() { //신규카드 등록
@@ -317,11 +232,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REQUEST_LOGIN:
                 if(resultCode == 100) {
-                    showToast("로그인 성공");
+                    showToast("로그인하였습니다.");
                     tvLogin.setText("Logout");
                     loginSuccess = 1;
                 } else if(resultCode == 101){
-                    showToast("로그인 실패");
+                    //showToast("로그인 실패");
                     tvLogin.setText("Login");
                     loginSuccess = 0;
                 }

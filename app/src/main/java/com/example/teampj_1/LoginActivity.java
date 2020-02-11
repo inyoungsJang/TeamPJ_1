@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
                         strId = cUser.getString(0);
                         strPassword = cUser.getString(1);
                         if (id.equals(strId) && password.equals(strPassword)) { //동일하면
-                            showToast("로그인을 하였습니다");
                             loginSuccess = 1;
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             intent.putExtra("piLOGIN", loginSuccess);
