@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="#55555555"
         android:gravity="center"
-        android:text="Login activity"
+        android:text="Sing Up activity"
         android:textSize="15dp" />
 
     <LinearLayout
@@ -21,40 +21,53 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/imgExit"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="right"
-            android:layout_marginBottom="70dp"
-            android:src="@drawable/exit_gray" />
-
-        <EditText
-            android:id="@+id/edtId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="ID" />
-
-        <EditText
-            android:id="@+id/edtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="PASSWORD" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:gravity="right">
 
             <TextView
                 android:id="@+id/tvLogin"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:background="#55555555"
+
                 android:gravity="center"
-                android:text="login"
+                android:text="Login"
                 android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/imgExit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:src="@drawable/exit_gray" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <EditText
+                android:id="@+id/edtId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID" />
+
+
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PASSWORD" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
+
 </LinearLayout>
+

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     //LinearLayout dialogAct
     String read;
     TextView tvBluetoothOnOff;
-    ImageView ivRFID;
+    ImageView ivRFID, ivBluetooth;
     int loginSuccess;
     String strLoginStatus;
 
@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter;
 
-    static final int REQUEST_ENABLE_BT = 10;
-    static final int REQUEST_LOGIN = 100;
+    static final int REQUEST_ENABLE_BT = 100;
+    static final int REQUEST_LOGIN = 200;
+    static final int REQUEST_SIGNUP = 300;
 
     int mPairedDeviceCount = 0;
     Set<BluetoothDevice> mDevices;
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ivBluetooth = (ImageView)findViewById(R.id.ivBluetooth);
         tvSignup = (TextView) findViewById(R.id.tvSignup);
         tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvLogout = (TextView) findViewById(R.id.tvLogout);
@@ -113,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSend.setOnClickListener(new View.OnClickListener() {
+        btnSend.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 시 메시지 통신을 할 수 있지만 현재는 보류......
             @Override
             public void onClick(View v) {
                 sendData(edtSendMsg.getText().toString());
@@ -121,18 +123,61 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tvSignup.setOnClickListener(new View.OnClickListener() {
+        tvSignup.setOnClickListener(new View.OnClickListener() { //회원가입
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //signup ACT
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_SIGNUP);
 
             }
         });
 
-        checkBluetooth();
-
+        ivBluetooth.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 할 기기 선택
+            @Override
+            public void onClick(View v) {
+                checkBluetooth();
+            }
+        });
     } //onCreate End
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //승인요청 수락시 메서드 실행
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_ENABLE_BT: //10
+                if (resultCode == RESULT_OK) { //승인
+                    selectDevice();
+                } else if (resultCode == RESULT_CANCELED) { //취소
+                    showToast("블루투스 연결을 취소하였습니다");
+                }
+                break;
+            case REQUEST_LOGIN:
+                if(resultCode == 100) {
+                    showToast("로그인하였습니다.");
+                    tvLogin.setText("Logout");
+                    loginSuccess = 1;
+                } else if(resultCode == 101){
+                    //showToast("로그인 실패");
+                    tvLogin.setText("Login");
+                    loginSuccess = 0;
+                }
+                break;
+            case REQUEST_SIGNUP:
+                if(resultCode == 100) {
+                    /*TODO: 계정 성공 시 즉시 로그인
+                    * 1. 로그인을 해준다.
+                    * 2. 카드 등록 다이얼로그를 출력한다.*/
+
+                    createCard();
+
+                } else {
+                    showToast("계정 생성 취소하였습니다.");
+                }
+                break;
+        }
+    } //onActivityResult END
+
 
     void createCard() { //신규카드 등록
         AlertDialog.Builder builder_createCard = new AlertDialog.Builder(this);
@@ -219,30 +264,7 @@ public class MainActivity extends AppCompatActivity {
         }
     } //selectDevice() END
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //승인요청 수락시 메서드 실행
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_ENABLE_BT: //10
-                if (resultCode == RESULT_OK) { //승인
-                    selectDevice();
-                } else if (resultCode == RESULT_CANCELED) { //취소
-                    showToast("블루투스 연결을 취소하였습니다");
-                }
-                break;
-            case REQUEST_LOGIN:
-                if(resultCode == 100) {
-                    showToast("로그인하였습니다.");
-                    tvLogin.setText("Logout");
-                    loginSuccess = 1;
-                } else if(resultCode == 101){
-                    //showToast("로그인 실패");
-                    tvLogin.setText("Login");
-                    loginSuccess = 0;
-                }
-                break;
-        }
-    } //onActivityResult END
+
 
     BluetoothDevice getDeviceBondedList(String name) { //페어링된 블루투스 장치 이름으로 찾기
         BluetoothDevice selectedDevice = null;
@@ -342,10 +364,13 @@ public class MainActivity extends AppCompatActivity {
             mOutputStream = mSocket.getOutputStream(); //송신 //ex led 조종
             mInputStream = mSocket.getInputStream(); //수신 //ex 온도습도 값
             beginListenForData(); //
-            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 0, 0, 255));
+
+            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 0, 0, 255)); // 연결 성공 시 보라색 변경
+            ivBluetooth.setImageResource(R.drawable.bluetooth_icon);
         } catch (Exception e) {
             showToast("블루투스 연결 중 오류가 발생하였습니다");
-            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 55, 55, 55)); //99555555
+            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 55, 55, 55)); // 연결 성공 시 회색 변경
+            ivBluetooth.setImageResource(R.drawable.bluetooth_grayicon);
         }
     }
 
@@ -366,6 +391,5 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 }
-
 
 /////////////////////////////////////

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -37,6 +38,7 @@ public class BluetoothDB extends SQLiteOpenHelper {
     }
 
     public void BluetoothInsertUserDB(String id, String password, String name) { //회원가입
+        Log.i("test","id: "+id+" pass: "+password+" name: "+name);
         sqlDB.execSQL("INSERT INTO bluetoothUserTBL (id,password,name) VALUES ( '" + id + "','" + password + "','" + name + "');");
         sqlDB.close();
     }
