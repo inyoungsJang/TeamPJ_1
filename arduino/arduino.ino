@@ -11,12 +11,15 @@
 #define SS_PIN          10          // Configurable, see typical pin layout above
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
-//카드 244 140 191 42
-//열쇠 87 28 101 123
+// 등록 4 102 177 43 
+// 미등록 2 219 214 52 
 
-byte Access[] = {244, 140, 191, 42};
-int led_red = 4;
-int led_green = 3;
+
+
+
+byte Access[] = {4, 102, 177, 43};
+int led_red = 3;
+int led_green = 4;
 int buzzer = 6;
 boolean ccard = true;
 
@@ -39,27 +42,32 @@ void loop() {
   if ( ! mfrc522.PICC_ReadCardSerial()) {
     return;
   }
+  
   ccard = true;
   for (byte i = 0; i < 4; i++) {
+    Serial.print(mfrc522.uid.uidByte[i]);
+    Serial.print(" ");
     if (mfrc522.uid.uidByte[i] != Access[i]) {
       ccard = false;
+//      break;
     }
+    
   }
 
   if (ccard) {
     digitalWrite(led_green, HIGH);
     digitalWrite(led_red, LOW);
     Serial.println("등록된 카드입니다.");
-    tone(6, 523, 100);
-    delay(500);
+//    tone(buzzer, 523, 100);
+//    delay(500);
   } else {
     digitalWrite(led_green, LOW);
     digitalWrite(led_red, HIGH);
     Serial.println("넌 도대체 누구냐?");
-    tone(6, 523, 100);
-    delay(200);
-    tone(6, 523, 100);
-    delay(200);
+//    tone(buzzer, 523, 100);
+//    delay(200);
+//    tone(buzzer, 523, 100);
+//    delay(200);
   }
   Serial.println();
   delay(1000);
