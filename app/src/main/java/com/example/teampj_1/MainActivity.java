@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnSend;
     EditText edtSendMsg;
-    TextView tvReceive;
+    TextView tvReceive, tvMsg;
     ImageView ivBT;
     TextView tvSignup, tvLogin, tvLogout;
 
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ivBluetooth = (ImageView)findViewById(R.id.ivBluetooth);
+        ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         tvSignup = (TextView) findViewById(R.id.tvSignup);
         tvLogin = (TextView) findViewById(R.id.tvLogin);
         tvLogout = (TextView) findViewById(R.id.tvLogout);
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
         card = (LinearLayout) findViewById(R.id.card);
+        tvMsg = (TextView) findViewById(R.id.tvMsg);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, REQUEST_LOGIN);
                 } else {
                     showToast("로그아웃되었습니다");
-                    loginSuccess=0;
+                    loginSuccess = 0;
                     tvLogin.setText("Login");
                 }
             }
@@ -118,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
         btnSend.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 시 메시지 통신을 할 수 있지만 현재는 보류......
             @Override
             public void onClick(View v) {
-                sendData(edtSendMsg.getText().toString());
+                String msg = edtSendMsg.getText().toString();
+//                tvMsg.setText(msg);
+                sendData(msg);
                 edtSendMsg.setText("");
             }
         });
@@ -153,21 +156,21 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_LOGIN:
-                if(resultCode == 100) {
+                if (resultCode == 100) {
                     showToast("로그인하였습니다.");
                     tvLogin.setText("Logout");
                     loginSuccess = 1;
-                } else if(resultCode == 101){
+                } else if (resultCode == 101) {
                     //showToast("로그인 실패");
                     tvLogin.setText("Login");
                     loginSuccess = 0;
                 }
                 break;
             case REQUEST_SIGNUP:
-                if(resultCode == 100) {
+                if (resultCode == 100) {
                     /*TODO: 계정 성공 시 즉시 로그인
-                    * 1. 로그인을 해준다.
-                    * 2. 카드 등록 다이얼로그를 출력한다.*/
+                     * 1. 로그인을 해준다.
+                     * 2. 카드 등록 다이얼로그를 출력한다.*/
 
                     createCard();
 
@@ -265,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
     } //selectDevice() END
 
 
-
     BluetoothDevice getDeviceBondedList(String name) { //페어링된 블루투스 장치 이름으로 찾기
         BluetoothDevice selectedDevice = null;
         for (BluetoothDevice device : mDevices) {
@@ -300,14 +302,15 @@ public class MainActivity extends AppCompatActivity {
                                     handler.post(new Runnable() { //아두이노에 작성한 전송부분을 수신하여 작업할 곳
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
-                                            tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
-                                            Log.i("test", "tvReadCard.setText(data) 성공");
-                                            tvTextReadCard.setText("");
-                                            Log.i("test", "tvTextReadCard.setText()성공");
-                                            ivRFID.setVisibility(View.INVISIBLE);
-                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
-                                            // read=data;
-                                            read = "1234-123-44312";
+//                                            tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
+//                                            Log.i("test", "tvReadCard.setText(data) 성공");
+//                                            tvTextReadCard.setText("");
+//                                            Log.i("test", "tvTextReadCard.setText()성공");
+//                                            ivRFID.setVisibility(View.INVISIBLE);
+//                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
+//                                            // read=data;
+//                                            read = "1234-123-44312";
+                                            tvMsg.setText(data);
 
                                             char array[] = data.toCharArray(); //
                                             Switch s = null;
@@ -346,6 +349,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void sendData(String msg) { //데이터를 송신
+        Log.i("test",msg);
         msg += mStrDelimiter; //mStrDelimiter 문자 끝을 알리는...
         try {
             mOutputStream.write(msg.getBytes()); //문자 전송
