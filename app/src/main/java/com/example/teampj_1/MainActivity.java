@@ -310,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
 //                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
 //                                            // read=data;
 //                                            read = "1234-123-44312";
+                                            Log.i("test","데이터 수신");
                                             tvMsg.setText(data);
 
                                             char array[] = data.toCharArray(); //

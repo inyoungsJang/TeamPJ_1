@@ -119,6 +119,8 @@
             android:id="@+id/tvMsg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:text="rfid"
+            android:layout_margin="10dp"
             android:layout_gravity="center"/>
 
     </LinearLayout>

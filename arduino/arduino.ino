@@ -43,23 +43,18 @@ void loop() {
   // 앱으로부터 Open 여부 수신
   if (BTSerial.available()) {
     byte data = BTSerial.read();
-//    Serial.write(data);
+    //    Serial.write(data);
     buffer[bufferPosition++] = data;
-    if (data == '\n') { 
-      buffer[bufferPosition-1]=0; //buffer에 마지막 한자리떄문에 비교못하기에 0으로 초기화
+    if (data == '\n') {
+      buffer[bufferPosition - 1] = 0; //buffer에 마지막 한자리떄문에 비교못하기에 0으로 초기화
       String msg = String((char*)buffer);
-      Serial.print("받은 msg: ");
-      Serial.println(msg);
-//      Serial.print("T or F? ");
-//      Serial.println(msg.equals("2"));
-//      boolean hey = msg.equals("2");
-//      isOpenDoor(hey);
-//      isOpenDoor(strcmp(buffer,"2"));
-        isOpenDoor(msg);
+      //      Serial.print("받은 msg: ");
+      //      Serial.println(msg);
+      isOpenDoor(msg);
     }
   }
 
-  sendRFID();   
+  sendRFID();
 //  delay(1000);
 }
 
@@ -68,41 +63,41 @@ void sendRFID() { // RFID가 읽히면 앱으로 RFID값을 전송한다.
   if ( ! mfrc522.PICC_IsNewCardPresent()) {
     return;
   }
-
   if ( ! mfrc522.PICC_ReadCardSerial()) {
     return;
   }
 
   for (byte i = 0; i < 4; i++) {
     strRFID += mfrc522.uid.uidByte[i];
-    Serial.print(mfrc522.uid.uidByte[i]);
-    Serial.print("/");   
+    //    Serial.print(mfrc522.uid.uidByte[i]);
+    //    Serial.print("/");
   }
-  Serial.println();
-  BTSerial.print(strRFID);  
-  strRFID = "";  
+  Serial.println(strRFID);
+  strRFID = strRFID+'\n'; //전송할떄는 \n을 추가해야함.
+  BTSerial.print(strRFID);
+  strRFID = "";
 }
 
-void isOpenDoor(String msg) { 
-  Serial.println(String("2:")+String("2").length()); 
-  Serial.println(String("msg length: ")+msg.length()); 
+void isOpenDoor(String msg) {
+//  Serial.println(String("2:") + String("2").length());
+  Serial.println(String("msg length: ") + msg.length());
   if (msg == "true") {
     digitalWrite(led_green, HIGH);
     digitalWrite(led_red, LOW);
     Serial.println("등록된 카드입니다.");
-    //tone(buzzer, 523, 100);
-    //delay(500);
+    tone(buzzer, 523, 100);
+    delay(500);
   } else {
     digitalWrite(led_green, LOW);
     digitalWrite(led_red, HIGH);
     Serial.println("넌 도대체 누구냐?");
-    //tone(buzzer, 523, 100);
-    //delay(200);
-    //tone(buzzer, 523, 100);
-    //delay(200);
-  } 
-  memset(buffer,0,sizeof(buffer));
-//  buffer = {0,};
+    tone(buzzer, 523, 100);
+    delay(200);
+    tone(buzzer, 523, 100);
+    delay(200);
+  }
+  memset(buffer, 0, sizeof(buffer));
+  //  buffer = {0,};
   bufferPosition = 0;
   delay(5000);
   digitalWrite(led_green, LOW);
