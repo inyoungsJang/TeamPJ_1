@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -95,6 +96,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                     } else {
                         btDB.BluetoothInsertUserDB(id, password, name); // insert
+                        UserData data =DataManager.getInstance().getUserData();
+                        data.id = id;
+                        data.password = password;
+                        data.user_name = name;
                         showToast("생성 되었습니다.");
 //                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         setResult(100);

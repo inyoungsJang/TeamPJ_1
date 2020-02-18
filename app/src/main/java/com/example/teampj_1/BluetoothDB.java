@@ -25,20 +25,23 @@ public class BluetoothDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE bluetoothUserTBL (id TEXT(20) NOT NULL PRIMARY KEY, password TEXT(20) NOT NULL, name TEXT(50) NOT NULL, rfid TEXT(50));"); //bluetoothUserTBL Table생성
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
+
     @Override
     public SQLiteDatabase getWritableDatabase() {
         return super.getWritableDatabase();
     }
+
     @Override
     public SQLiteDatabase getReadableDatabase() {
         return super.getReadableDatabase();
     }
 
     public void BluetoothInsertUserDB(String id, String password, String name) { //회원가입
-        Log.i("test","id: "+id+" pass: "+password+" name: "+name);
+        Log.i("test", "id: " + id + " pass: " + password + " name: " + name);
         sqlDB.execSQL("INSERT INTO bluetoothUserTBL (id,password,name) VALUES ( '" + id + "','" + password + "','" + name + "');");
         sqlDB.close();
     }
@@ -74,11 +77,13 @@ public class BluetoothDB extends SQLiteOpenHelper {
 //        cursor.close();
 //    }
 
-    public void bluetoothOverlapDB(){ //계정 중복확인
+    public void bluetoothOverlapDB() { //계정 중복확인
 
     }
 
-    public void bluetoothUserNameDB(){ //로그인 후 사용자 이름 출력
+    public void bluetoothUserNameDB() { //로그인 후 사용자 이름 출력
 
     }
+
+
 }

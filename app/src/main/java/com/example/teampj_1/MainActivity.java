@@ -10,6 +10,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView ivRFID, ivBluetooth;
     int loginSuccess;
     String strLoginStatus;
+    AlertDialog ad;
 
     Button btnSend;
     EditText edtSendMsg;
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     byte readBuffer[];
     int readBufferPosition;
     View dialogView;
-
+    boolean isSignup = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,10 +170,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REQUEST_SIGNUP:
                 if (resultCode == 100) {
+
                     /*TODO: 계정 성공 시 즉시 로그인
                      * 1. 로그인을 해준다.
                      * 2. 카드 등록 다이얼로그를 출력한다.*/
-
+                    isSignup = true;
                     createCard();
 
                 } else {
@@ -181,6 +184,37 @@ public class MainActivity extends AppCompatActivity {
         }
     } //onActivityResult END
 
+
+    void checkRFID(String rfid) { //회원가입한 후의 카드등록, 로그인한 후의 카드등록
+        sqlDB = btDB.getWritableDatabase();
+        Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
+
+
+        if (isSignup) { //회원가입성공시
+            cursor.moveToLast();
+            UserData data = DataManager.getInstance().getUserData();
+            String id = data.id;
+            Log.i("test","등록할 rfid값: "+rfid);
+            data.rfid = rfid;
+            Log.i("test","등록된 rfid값: "+data.rfid);
+
+            sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
+            ad.dismiss();
+            showToast("등록 되셧습니다. "+rfid);
+            isSignup = false;
+        } else { //로그인성공시
+            UserData data = DataManager.getInstance().getUserData();
+            Log.i("test","받은 rfid값: "+rfid);
+            Log.i("test","등록된 rfid값: "+data.rfid);
+            if(rfid.equals(data.rfid)){
+                sendData("true");
+                showToast("아두이노에게 열라고 명령함");
+            } else {
+                sendData("false");
+                showToast("아두이노에게 열지마 ~~~~!!!");
+            }
+        }
+    }
 
     void createCard() { //신규카드 등록
         AlertDialog.Builder builder_createCard = new AlertDialog.Builder(this);
@@ -194,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showToast("등록을 취소하였습니다");
+//                showToast("등록을 취소하였습니다");
             }
         });
         builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
@@ -216,10 +250,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // TODO: 2020-01-28 RFID값을 DB에 저장해야함
         builder_createCard.setView(dialogView);
         builder_createCard.setCancelable(false);
-        builder_createCard.show();
+        ad = builder_createCard.create();
+        ad.show();
     }
 
     void checkBluetooth() {
@@ -310,29 +346,9 @@ public class MainActivity extends AppCompatActivity {
 //                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
 //                                            // read=data;
 //                                            read = "1234-123-44312";
-                                            Log.i("test","데이터 수신");
+                                            Log.i("test", "데이터 수신:"+data);
                                             tvMsg.setText(data);
-
-                                            char array[] = data.toCharArray(); //
-                                            Switch s = null;
-
-                                            switch (array[0]) {
-                                                case '1':
-                                                    //  s = sw1;
-                                                    break;
-                                                case '2':
-                                                    // s = sw2;
-                                                    break;
-                                                case '3':
-                                                    //        s = sw3;
-                                            }
-                                            if (s != null) { //스위치값이 null이 아니면 //값을 받음
-                                                if (array[1] == '0') { //0(버튼안누름)이면 false
-                                                    s.setChecked(false);
-                                                } else if (array[1] == '1') { //1(버튼누름)이면 true
-                                                    s.setChecked(true);
-                                                }
-                                            }
+                                            checkRFID(data);
                                         }
                                     });
                                 } else {
@@ -350,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void sendData(String msg) { //데이터를 송신
-        Log.i("test",msg);
+        Log.i("test", msg);
         msg += mStrDelimiter; //mStrDelimiter 문자 끝을 알리는...
         try {
             mOutputStream.write(msg.getBytes()); //문자 전송
@@ -395,6 +411,8 @@ public class MainActivity extends AppCompatActivity {
     void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }
 
 /////////////////////////////////////

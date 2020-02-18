@@ -67,17 +67,25 @@ public class LoginActivity extends AppCompatActivity {
             showToast("ID PASSWORD를 입력해주세요");
         } else {
             sqlDB = btDB.getReadableDatabase(); //읽다
-            Cursor cUser = sqlDB.rawQuery("SELECT id,password FROM bluetoothUserTBL WHERE id='" + id + "';", null);
+            Cursor cUser = sqlDB.rawQuery("SELECT * FROM bluetoothUserTBL WHERE id='" + id + "';", null);
             if (cUser.moveToFirst()) { //디비가 존재한다면
-                String strId, strPassword;
+                String strId, strPassword, strUserName, strRFID;
                 strId = cUser.getString(0);
                 strPassword = cUser.getString(1);
+                strUserName = cUser.getString(2);
+                strRFID = cUser.getString(3);
+
                 if (id.equals(strId) && password.equals(strPassword)) { //동일하면
                     loginSuccess = 1;
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     intent.putExtra("piLOGIN", loginSuccess);
 //                            startActivity(intent,);
                     setResult(100, intent);
+                    UserData data = DataManager.getInstance().getUserData();
+                    data.id = strId;
+                    data.password = strPassword;
+                    data.user_name = strUserName;
+                    data.rfid = strRFID;
                     finish(); //현재창 종료하기
                 } else {
                     showToast("비밀번호를 다시한번 확인해주세요.");
@@ -93,4 +101,5 @@ public class LoginActivity extends AppCompatActivity {
     void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
+
 }
