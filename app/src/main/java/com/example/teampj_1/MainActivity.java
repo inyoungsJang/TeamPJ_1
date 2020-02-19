@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     EditText edtSendMsg;
     TextView tvReceive, tvMsg;
     ImageView ivBT;
-    TextView tvSignup, tvLogin, tvLogout;
+  //  TextView tvSignup, tvLogin, tvLogout;
+    Button btnLogin,btnSignup,btnETC;
 
     SQLiteDatabase sqlDB;
     BluetoothDB btDB;
@@ -80,9 +81,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
-        tvSignup = (TextView) findViewById(R.id.tvSignup);
-        tvLogin = (TextView) findViewById(R.id.tvLogin);
-        tvLogout = (TextView) findViewById(R.id.tvLogout);
+//        tvSignup = (TextView) findViewById(R.id.tvSignup);
+//        tvLogin = (TextView) findViewById(R.id.tvLogin);
+
+        btnLogin=(Button)findViewById(R.id.btnLogin);
+        btnSignup=(Button)findViewById(R.id.btnSignup);
+
         btnSend = (Button) findViewById(R.id.btnSend);
         edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         Intent getIntent = getIntent();
         loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
 
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (loginSuccess == 0) {  //로그인 전
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showToast("로그아웃되었습니다");
                     loginSuccess = 0;
-                    tvLogin.setText("Login");
+                    btnLogin.setText("Login");
                 }
             }
         });
@@ -128,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        tvSignup.setOnClickListener(new View.OnClickListener() { //회원가입
+        btnSignup.setOnClickListener(new View.OnClickListener() { //회원가입
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //signup ACT
@@ -160,11 +164,11 @@ public class MainActivity extends AppCompatActivity {
             case REQUEST_LOGIN:
                 if (resultCode == 100) {
                     showToast("로그인하였습니다.");
-                    tvLogin.setText("Logout");
+                    btnLogin.setText("Logout");
                     loginSuccess = 1;
                 } else if (resultCode == 101) {
                     //showToast("로그인 실패");
-                    tvLogin.setText("Login");
+                    btnLogin.setText("Login");
                     loginSuccess = 0;
                 }
                 break;
