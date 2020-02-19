@@ -107,7 +107,7 @@
                 android:layout_width="250dp"
                 android:layout_height="400dp"
                 android:layout_gravity="center"
-                android:src="@drawable/createCard6" />
+                android:src="@drawable/createcard6" />
 
         </FrameLayout>
     </LinearLayout>

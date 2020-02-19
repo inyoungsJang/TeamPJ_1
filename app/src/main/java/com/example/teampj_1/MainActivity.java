@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     String strLoginStatus;
     AlertDialog ad;
 
-    Button btnSend;
-    EditText edtSendMsg;
+   // Button btnSend;
+   // EditText edtSendMsg;
     TextView tvMsg;
     Button btnLogin,btnSignup,btnEtc;
     ImageView ivCard;
@@ -119,15 +119,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSend.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 시 메시지 통신을 할 수 있지만 현재는 보류......
-            @Override
-            public void onClick(View v) {
-                String msg = edtSendMsg.getText().toString();
-//                tvMsg.setText(msg);
-                sendData(msg);
-                edtSendMsg.setText("");
-            }
-        });
+//        btnSend.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 시 메시지 통신을 할 수 있지만 현재는 보류......
+//            @Override
+//            public void onClick(View v) {
+//                String msg = edtSendMsg.getText().toString();
+////                tvMsg.setText(msg);
+//                sendData(msg);
+//                edtSendMsg.setText("");
+//            }
+//        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() { //회원가입
             @Override
