@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     String strLoginStatus;
     AlertDialog ad;
 
+    Button btnSend;
+    EditText edtSendMsg;
+    TextView tvReceive;
+    String buffer;
+    ImageView ivBT;
+    TextView tvSignup, tvLogin, tvLogout;
    // Button btnSend;
    // EditText edtSendMsg;
     TextView tvMsg;
@@ -188,26 +194,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     void checkRFID(String rfid) { //회원가입한 후의 카드등록, 로그인한 후의 카드등록
-        sqlDB = btDB.getWritableDatabase();
-        Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
-
 
         if (isSignup) { //회원가입성공시
+            buffer = "회원 가입 성공 \n" + buffer;
+
+            sqlDB = btDB.getWritableDatabase();
+            Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
             cursor.moveToLast();
             UserData data = DataManager.getInstance().getUserData();
+
             String id = data.id;
             Log.i("test","등록할 rfid값: "+rfid);
             data.rfid = rfid;
             Log.i("test","등록된 rfid값: "+data.rfid);
+            buffer = "user.id: "+data.id+" user.rfid: "+data.rfid+"\n" + buffer;
 
             sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
             ad.dismiss();
             showToast("등록 되셧습니다. "+rfid);
             isSignup = false;
+
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
+
+            buffer = "로그인 성공 \n" + buffer;
+            buffer = "user.rfid:    "+data.rfid+"\n" + buffer;
+            buffer = "receive.rfid: "+rfid+"\n" + buffer;
             Log.i("test","받은 rfid값: "+rfid);
             Log.i("test","등록된 rfid값: "+data.rfid);
+
             if(rfid.equals(data.rfid)){
                 sendData("true");
                 showToast("아두이노에게 열라고 명령함");
@@ -216,6 +231,8 @@ public class MainActivity extends AppCompatActivity {
                 showToast("아두이노에게 열지마 ~~~~!!!");
             }
         }
+
+        tvMsg.setText(buffer);
     }
 
     void createCard() { //신규카드 등록
@@ -233,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
 //                showToast("등록을 취소하였습니다");
             }
         });
-        builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+        /*builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //showToast("카드를 등록하였습니다");
@@ -251,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: 2020-02-07 로그아웃시 ??값을보냄
             }
         });
-
+*/
 
         // TODO: 2020-01-28 RFID값을 DB에 저장해야함
         builder_createCard.setView(dialogView);
@@ -349,7 +366,8 @@ public class MainActivity extends AppCompatActivity {
 //                                            // read=data;
 //                                            read = "1234-123-44312";
                                             Log.i("test", "데이터 수신:"+data);
-                                            tvMsg.setText(data);
+                                            buffer = data+"\n"+ buffer;
+                                            tvMsg.setText(buffer);
                                             checkRFID(data);
                                         }
                                     });
@@ -370,11 +388,17 @@ public class MainActivity extends AppCompatActivity {
     void sendData(String msg) { //데이터를 송신
         Log.i("test", msg);
         msg += mStrDelimiter; //mStrDelimiter 문자 끝을 알리는...
+
         try {
             mOutputStream.write(msg.getBytes()); //문자 전송
+            buffer = msg +buffer;
+            buffer = "문자전송: " + buffer;
+
         } catch (Exception e) {
+            buffer = "문자 전송 실패\n"+ buffer;
             showToast("데이터 전송 중 오류가 발생하였습니다");
         }
+        tvMsg.setText(buffer);
     }
 
     void connectToSelectDevice(String selectedDeviceName) { //선택된 장치 연결(페어링) 메서드
@@ -387,12 +411,12 @@ public class MainActivity extends AppCompatActivity {
             mOutputStream = mSocket.getOutputStream(); //송신 //ex led 조종
             mInputStream = mSocket.getInputStream(); //수신 //ex 온도습도 값
             beginListenForData(); //
-            ivBluetooth.setImageResource(R.drawable.bluetooth);
+            ivBluetooth.setImageResource(R.drawable.bluetooth_icon);
             tvBluetoothEx.setText("");
         } catch (Exception e) {
            // showToast("블루투스 연결 중 오류가 발생하였습니다");
             tvBluetoothEx.setText("블루투스 연결 중 요류가 발생하였습니다.\n다시한번 연결을 시도해주세요");
-            ivBluetooth.setImageResource(R.drawable.bluetooth_gray);
+            ivBluetooth.setImageResource(R.drawable.bluetooth_grayicon);
         }
     }
 
@@ -412,5 +436,7 @@ public class MainActivity extends AppCompatActivity {
     void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }
 

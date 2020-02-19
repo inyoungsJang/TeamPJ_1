@@ -70,7 +70,7 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:src="@drawable/bluetooth_gray" />
+                android:src="@drawable/Bluetooth_gray" />
 
             <TextView
                 android:id="@+id/tvBluetoothEx"
