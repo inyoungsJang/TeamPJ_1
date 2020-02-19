@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         ivCard=(ImageView)findViewById(R.id.ivCard);
         tvMsg = (TextView) findViewById(R.id.tvMsg);
         tvBluetoothEx=(TextView)findViewById(R.id.tvBluetoothEx);
+        btnEtc=(Button)findViewById(R.id.btnEtc);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -135,6 +136,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class); //signup ACT
                 startActivityForResult(intent, REQUEST_SIGNUP);
 
+            }
+        });
+
+        btnEtc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getApplicationContext(),SettingActivity.class);
+                startActivity(intent);
             }
         });
 
