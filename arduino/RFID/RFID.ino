@@ -15,8 +15,7 @@ void setup() {
 }
 
 
-void loop() {
-
+void loop() {  
   if ( ! mfrc522.PICC_IsNewCardPresent()) {    
     return;
   }

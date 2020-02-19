@@ -1,3 +1,7 @@
+//LCD
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
 //RFID
 #include <SPI.h>
 #include <MFRC522.h>
@@ -13,7 +17,8 @@ SoftwareSerial BTSerial(2, 3); //bluetooth module Tx:Digital 2 Rx: Digital 3
 //bluetooth
 byte buffer[1024];
 int bufferPosition; //버퍼에 기록할 위치
-
+//LCD
+LiquidCrystal_I2C lcd(0x27, 16, 2);
 // RFID
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
 // 등록 4 102 177 43
@@ -23,9 +28,14 @@ int led_red = 8;
 int led_green = 7;
 int buzzer = 6;
 
+int runnn = 1;
 String strRFID = "";
 
 void setup() {
+  lcd.init(); // I2C LC를 초기화
+  lcd.backlight(); //lcd 백라이트 켜줍니다.
+  lcd.print("hello aduino !!! heellelelfleflel");
+  
   Serial.begin(9600);                                           // Initialize serial communications with the PC
   SPI.begin();                                                  // Init SPI busmfrc522.PCD_Init();                                              // Init MFRC522 card
   Serial.println(F("Read personal data on a MIFARE PICC:"));    //shows in serial that it is ready to read
@@ -45,7 +55,7 @@ void loop() {
     byte data = BTSerial.read();
     //    Serial.write(data);
     buffer[bufferPosition++] = data;
-    if (data == '\n') {
+    if (data == '\n') {      
       buffer[bufferPosition - 1] = 0; //buffer에 마지막 한자리떄문에 비교못하기에 0으로 초기화
       String msg = String((char*)buffer);
       //      Serial.print("받은 msg: ");
@@ -53,9 +63,15 @@ void loop() {
       isOpenDoor(msg);
     }
   }
-
+  
   sendRFID();
-//  delay(1000);
+  if(runnn%30== 0){
+    runnn = 1;
+    Serial.println();
+  }
+    
+  Serial.print(runnn++);
+  delay(100);
 }
 
 void sendRFID() { // RFID가 읽히면 앱으로 RFID값을 전송한다.
@@ -79,26 +95,34 @@ void sendRFID() { // RFID가 읽히면 앱으로 RFID값을 전송한다.
 }
 
 void isOpenDoor(String msg) {
-//  Serial.println(String("2:") + String("2").length());
-  Serial.println(String("msg length: ") + msg.length());
+  lcd.clear();
+  Serial.println(String("msg: ") + msg);
   if (msg == "true") {
     digitalWrite(led_green, HIGH);
     digitalWrite(led_red, LOW);
+    
     Serial.println("등록된 카드입니다.");
+    lcd.setCursor(0,0);
+    lcd.print("Welcome");
+    
     tone(buzzer, 523, 100);
     delay(500);
   } else {
     digitalWrite(led_green, LOW);
     digitalWrite(led_red, HIGH);
+    
     Serial.println("넌 도대체 누구냐?");
+    lcd.setCursor(0, 0);
+    lcd.print("WHO ARE YOU?");
+    
     tone(buzzer, 523, 100);
     delay(200);
     tone(buzzer, 523, 100);
     delay(200);
   }
-  memset(buffer, 0, sizeof(buffer));
-  //  buffer = {0,};
+  memset(buffer, 0, sizeof(buffer));  
   bufferPosition = 0;
+  
   delay(5000);
   digitalWrite(led_green, LOW);
   digitalWrite(led_red, LOW);
