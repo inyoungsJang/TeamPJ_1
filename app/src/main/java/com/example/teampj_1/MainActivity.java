@@ -35,11 +35,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
-    LinearLayout card;
+
     TextView tvReadCard, tvTextReadCard;
-    //LinearLayout dialogAct
-    String read;
-    TextView tvBluetoothOnOff;
     ImageView ivRFID, ivBluetooth;
     int loginSuccess;
     String strLoginStatus;
@@ -47,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnSend;
     EditText edtSendMsg;
-    TextView tvReceive, tvMsg;
-    ImageView ivBT;
-  //  TextView tvSignup, tvLogin, tvLogout;
-    Button btnLogin,btnSignup,btnETC;
+    TextView tvMsg;
+    Button btnLogin,btnSignup,btnEtc;
+    ImageView ivCard;
+    TextView tvBluetoothEx;
 
     SQLiteDatabase sqlDB;
     BluetoothDB btDB;
@@ -79,21 +76,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        UserData data = DataManager.getInstance().getUserData(); //현재데이타
+//        data.id = strId;
+//        data.password = strPassword;
+//        data.user_name = strUserName;
+//        data.rfid = strRFID;
 
         ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
-//        tvSignup = (TextView) findViewById(R.id.tvSignup);
-//        tvLogin = (TextView) findViewById(R.id.tvLogin);
-
         btnLogin=(Button)findViewById(R.id.btnLogin);
         btnSignup=(Button)findViewById(R.id.btnSignup);
-
-        btnSend = (Button) findViewById(R.id.btnSend);
-        edtSendMsg = (EditText) findViewById(R.id.edtSendMsg);
         tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
-        tvBluetoothOnOff = (TextView) findViewById(R.id.tvBluetoothOnOff);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
-        card = (LinearLayout) findViewById(R.id.card);
+        ivCard=(ImageView)findViewById(R.id.ivCard);
         tvMsg = (TextView) findViewById(R.id.tvMsg);
+        tvBluetoothEx=(TextView)findViewById(R.id.tvBluetoothEx);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
@@ -111,11 +107,12 @@ public class MainActivity extends AppCompatActivity {
                     showToast("로그아웃되었습니다");
                     loginSuccess = 0;
                     btnLogin.setText("Login");
+
                 }
             }
         });
 
-        card.setOnClickListener(new View.OnClickListener() { //카드등록
+        ivCard.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
             public void onClick(View v) {
                 createCard();
@@ -153,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //승인요청 수락시 메서드 실행
         super.onActivityResult(requestCode, resultCode, data);
+
         switch (requestCode) {
             case REQUEST_ENABLE_BT: //10
                 if (resultCode == RESULT_OK) { //승인
@@ -389,13 +387,12 @@ public class MainActivity extends AppCompatActivity {
             mOutputStream = mSocket.getOutputStream(); //송신 //ex led 조종
             mInputStream = mSocket.getInputStream(); //수신 //ex 온도습도 값
             beginListenForData(); //
-
-            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 0, 0, 255)); // 연결 성공 시 보라색 변경
-            ivBluetooth.setImageResource(R.drawable.bluetooth_icon);
+            ivBluetooth.setImageResource(R.drawable.bluetooth);
+            tvBluetoothEx.setText("");
         } catch (Exception e) {
-            showToast("블루투스 연결 중 오류가 발생하였습니다");
-            tvBluetoothOnOff.setBackgroundColor(Color.argb(55, 55, 55, 55)); // 연결 성공 시 회색 변경
-            ivBluetooth.setImageResource(R.drawable.bluetooth_grayicon);
+           // showToast("블루투스 연결 중 오류가 발생하였습니다");
+            tvBluetoothEx.setText("블루투스 연결 중 요류가 발생하였습니다.\n다시한번 연결을 시도해주세요");
+            ivBluetooth.setImageResource(R.drawable.bluetooth_gray);
         }
     }
 
@@ -415,8 +412,5 @@ public class MainActivity extends AppCompatActivity {
     void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
-
-
 }
 
-/////////////////////////////////////
