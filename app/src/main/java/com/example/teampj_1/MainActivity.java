@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showToast("로그아웃되었습니다");
                     loginSuccess = 0;
-                    btnLogin.setText("Login");
+                    btnLogin.setText("로그인");
 
                 }
             }
@@ -171,11 +171,11 @@ public class MainActivity extends AppCompatActivity {
             case REQUEST_LOGIN:
                 if (resultCode == 100) {
                     showToast("로그인하였습니다.");
-                    btnLogin.setText("Logout");
+                    btnLogin.setText("로그아웃");
                     loginSuccess = 1;
                 } else if (resultCode == 101) {
                     //showToast("로그인 실패");
-                    btnLogin.setText("Login");
+                    btnLogin.setText("로그인");
                     loginSuccess = 0;
                 }
                 break;
