@@ -47,11 +47,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnSend;
     EditText edtSendMsg;
     TextView tvReceive;
-    String buffer;
+
     ImageView ivBT;
     TextView tvSignup, tvLogin, tvLogout;
 
-    TextView tvMsg;
     Button btnLogin, btnSignup, btnEtc;
     ImageView ivCard;
     TextView tvBluetoothEx;
@@ -209,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     void checkRFID(String rfid) { //회원가입한 후의 카드등록, 로그인한 후의 카드등록
 
         if (isSignup) { //회원가입성공시
-            buffer = "회원 가입 성공 \n" + buffer;
+
 
             sqlDB = btDB.getWritableDatabase();
             Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
@@ -217,11 +216,11 @@ public class MainActivity extends AppCompatActivity {
             UserData data = DataManager.getInstance().getUserData();
 
             String id = data.id;
+
+            Log.i("test", "회원 가입 성공");
             Log.i("test", "등록할 rfid값: " + rfid);
             data.rfid = rfid;
             Log.i("test","등록된 rfid값: "+data.rfid);
-            buffer = "user.id: "+data.id+" user.rfid: "+data.rfid+"\n" + buffer;
-            Log.i("test", "등록된 rfid값: " + data.rfid);
 
             sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
             ad.dismiss();
@@ -230,10 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
-
-            buffer = "로그인 성공 \n" + buffer;
-            buffer = "user.rfid:    "+data.rfid+"\n" + buffer;
-            buffer = "receive.rfid: "+rfid+"\n" + buffer;
+            Log.i("test","로그인 성공");
             Log.i("test","받은 rfid값: "+rfid);
             Log.i("test","등록된 rfid값: "+data.rfid);
 
@@ -246,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        tvMsg.setText(buffer);
+
     }
 
     void createCard() { //신규카드 등록
@@ -371,17 +367,7 @@ public class MainActivity extends AppCompatActivity {
                                     handler.post(new Runnable() { //아두이노에 작성한 전송부분을 수신하여 작업할 곳
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
-//                                            tvReadCard.setText(data); //test //대충 아두이노가 핸드폰의 RFID 를 읽어온 값
-//                                            Log.i("test", "tvReadCard.setText(data) 성공");
-//                                            tvTextReadCard.setText("");
-//                                            Log.i("test", "tvTextReadCard.setText()성공");
-//                                            ivRFID.setVisibility(View.INVISIBLE);
-//                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
-//                                            // read=data;
-//                                            read = "1234-123-44312";
                                             Log.i("test", "데이터 수신:"+data);
-                                            buffer = data+"\n"+ buffer;
-                                            tvMsg.setText(buffer);
                                             checkRFID(data);
                                         }
                                     });
@@ -405,14 +391,11 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             mOutputStream.write(msg.getBytes()); //문자 전송
-            buffer = msg +buffer;
-            buffer = "문자전송: " + buffer;
-
+            Log.i("test", "문자전송: "+ msg);
         } catch (Exception e) {
-            buffer = "문자 전송 실패\n"+ buffer;
+            Log.i("test", "문자전송 실패"+ msg);
             showToast("데이터 전송 중 오류가 발생하였습니다");
         }
-        tvMsg.setText(buffer);
     }
 
     void connectToSelectDevice(String selectedDeviceName) { //선택된 장치 연결(페어링) 메서드
