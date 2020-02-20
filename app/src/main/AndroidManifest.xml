@@ -8,10 +8,18 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="EasyDoor"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".NameChangeActivity" />
+        <activity android:name=".PasswordChangeActivity" />
+        <activity android:name=".Intro" />
+        <activity android:name=".LockPasswordActivity" />
+        <activity android:name=".VersionActivity" />
+        <activity android:name=".InformationActivity" />
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".SettingActivity" />
         <activity android:name=".LogoutActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />

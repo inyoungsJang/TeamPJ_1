@@ -1,5 +1,6 @@
 package com.example.teampj_1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
         btDB = new BluetoothDB(this);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.setTitle("회원가입");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
 
         imgExit.setOnClickListener(new View.OnClickListener() {
@@ -115,5 +119,14 @@ public class SignUpActivity extends AppCompatActivity {
 
     void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch ((item.getItemId())) {
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

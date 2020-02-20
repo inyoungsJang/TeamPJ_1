@@ -1,5 +1,6 @@
 package com.example.teampj_1;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         tvLogin = (TextView) findViewById(R.id.tvLogin);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.setTitle("로그인");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         btDB = new BluetoothDB(this);
 
@@ -43,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String id = edtId.getText().toString();
                 String password = edtPassword.getText().toString();
-
                 Login(id, password);
             }
         });
@@ -102,4 +104,12 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch ((item.getItemId())) {
+            case android.R.id.home:
+                finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
