@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
     String strLoginStatus;
     AlertDialog ad;
 
-    // Button btnSend;
-    // EditText edtSendMsg;
     TextView tvMsg;
     Button btnLogin, btnSignup, btnEtc;
     ImageView ivCard;
@@ -76,11 +74,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UserData data = DataManager.getInstance().getUserData(); //현재데이타
-//        data.id = strId;
-//        data.password = strPassword;
-//        data.user_name = strUserName;
-//        data.rfid = strRFID;
 
         ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -88,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
         ivCard = (ImageView) findViewById(R.id.ivCard);
-      //  tvMsg = (TextView) findViewById(R.id.tvMsg);
         tvBluetoothEx = (TextView) findViewById(R.id.tvBluetoothEx);
         btnEtc = (Button) findViewById(R.id.btnEtc);
 
@@ -123,16 +115,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        btnSend.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 시 메시지 통신을 할 수 있지만 현재는 보류......
-//            @Override
-//            public void onClick(View v) {
-//                String msg = edtSendMsg.getText().toString();
-////                tvMsg.setText(msg);
-//                sendData(msg);
-//                edtSendMsg.setText("");
-//            }
-//        });
-
         btnSignup.setOnClickListener(new View.OnClickListener() { //회원가입
             @Override
             public void onClick(View v) {
@@ -157,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     } //onCreate End
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //승인요청 수락시 메서드 실행

@@ -21,9 +21,7 @@ import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText edtId, edtPassword, edtName;
-    TextView tvSignup;
-    ImageView imgExit;
-    Button btnCheckID;
+    Button btnSignup, btnCheckID,btnCancel;
     String id, password, rfid, name;
 
     // SQLiteDatabase sqlDB;
@@ -38,22 +36,14 @@ public class SignUpActivity extends AppCompatActivity {
         edtId = (EditText) findViewById(R.id.edtId);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         edtName = (EditText) findViewById(R.id.edtName);
-        imgExit = (ImageView) findViewById(R.id.imgExit);
-        tvSignup = (TextView) findViewById(R.id.tvSignup);
         btnCheckID = (Button) findViewById(R.id.btnCheckID);
+        btnSignup = (Button) findViewById(R.id.btnSignup);
+        btnCancel=(Button)findViewById(R.id.btnCancel);
         btDB = new BluetoothDB(this);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("회원가입");
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
-        imgExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish(); //현재창 종료하기
-            }
-        });
 
         btnCheckID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +62,13 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-
-        tvSignup.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 id = edtId.getText().toString();
@@ -100,7 +95,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                     } else {
                         btDB.BluetoothInsertUserDB(id, password, name); // insert
-                        UserData data =DataManager.getInstance().getUserData();
+                        UserData data = DataManager.getInstance().getUserData();
                         data.id = id;
                         data.password = password;
                         data.user_name = name;
