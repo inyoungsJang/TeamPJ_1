@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     String strLoginStatus;
     AlertDialog ad;
 
-   // Button btnSend;
-   // EditText edtSendMsg;
+    // Button btnSend;
+    // EditText edtSendMsg;
     TextView tvMsg;
-    Button btnLogin,btnSignup,btnEtc;
+    Button btnLogin, btnSignup, btnEtc;
     ImageView ivCard;
     TextView tvBluetoothEx;
 
@@ -83,17 +83,20 @@ public class MainActivity extends AppCompatActivity {
 //        data.rfid = strRFID;
 
         ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
-        btnLogin=(Button)findViewById(R.id.btnLogin);
-        btnSignup=(Button)findViewById(R.id.btnSignup);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnSignup = (Button) findViewById(R.id.btnSignup);
         tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
-        ivCard=(ImageView)findViewById(R.id.ivCard);
-        tvMsg = (TextView) findViewById(R.id.tvMsg);
-        tvBluetoothEx=(TextView)findViewById(R.id.tvBluetoothEx);
-        btnEtc=(Button)findViewById(R.id.btnEtc);
+        ivCard = (ImageView) findViewById(R.id.ivCard);
+      //  tvMsg = (TextView) findViewById(R.id.tvMsg);
+        tvBluetoothEx = (TextView) findViewById(R.id.tvBluetoothEx);
+        btnEtc = (Button) findViewById(R.id.btnEtc);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+        Intent intent = new Intent(getApplicationContext(), Intro.class); //로딩화면
+        startActivity(intent);
 
         Intent getIntent = getIntent();
         loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
@@ -142,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         btnEtc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),SettingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -205,19 +208,19 @@ public class MainActivity extends AppCompatActivity {
             cursor.moveToLast();
             UserData data = DataManager.getInstance().getUserData();
             String id = data.id;
-            Log.i("test","등록할 rfid값: "+rfid);
+            Log.i("test", "등록할 rfid값: " + rfid);
             data.rfid = rfid;
-            Log.i("test","등록된 rfid값: "+data.rfid);
+            Log.i("test", "등록된 rfid값: " + data.rfid);
 
             sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
             ad.dismiss();
-            showToast("등록 되셧습니다. "+rfid);
+            showToast("등록 되셧습니다. " + rfid);
             isSignup = false;
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
-            Log.i("test","받은 rfid값: "+rfid);
-            Log.i("test","등록된 rfid값: "+data.rfid);
-            if(rfid.equals(data.rfid)){
+            Log.i("test", "받은 rfid값: " + rfid);
+            Log.i("test", "등록된 rfid값: " + data.rfid);
+            if (rfid.equals(data.rfid)) {
                 sendData("true");
                 showToast("아두이노에게 열라고 명령함");
             } else {
@@ -357,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
 //                                            Log.i("test", "ivRFID.setVisibility(View.INVISBLE) 성공");
 //                                            // read=data;
 //                                            read = "1234-123-44312";
-                                            Log.i("test", "데이터 수신:"+data);
+                                            Log.i("test", "데이터 수신:" + data);
                                             tvMsg.setText(data);
                                             checkRFID(data);
                                         }
@@ -399,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
             ivBluetooth.setImageResource(R.drawable.bluetooth);
             tvBluetoothEx.setText("");
         } catch (Exception e) {
-           // showToast("블루투스 연결 중 오류가 발생하였습니다");
+            // showToast("블루투스 연결 중 오류가 발생하였습니다");
             tvBluetoothEx.setText("블루투스 연결 중 요류가 발생하였습니다.\n다시한번 연결을 시도해주세요");
             ivBluetooth.setImageResource(R.drawable.bluetooth_gray);
         }
