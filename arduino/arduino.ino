@@ -11,8 +11,9 @@
 SoftwareSerial BTSerial(2, 3); //bluetooth module Tx:Digital 2 Rx: Digital 3
 
 //RFID
-#define RST_PIN         9           // Configurable, see typical pin layout above
-#define SS_PIN          10          // Configurable, see typical pin layout above
+#define RST_PIN         9          
+#define SS_PIN          10          
+
 
 //bluetooth
 byte buffer[1024];
@@ -23,8 +24,9 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
 // 등록 4 102 177 43
 // 미등록 2 219 214 52
-byte Access[] = {4, 102, 177, 43};
-int led_red = 8;
+//byte Access[] = {4, 102, 177, 43};
+
+//int led_red = 8;
 int led_green = 7;
 int buzzer = 6;
 
@@ -41,7 +43,7 @@ void setup() {
   Serial.println(F("Read personal data on a MIFARE PICC:"));    //shows in serial that it is ready to read
 
   pinMode(led_green, OUTPUT);
-  pinMode(led_red, OUTPUT);
+//  pinMode(led_red, OUTPUT);
   pinMode(buzzer, OUTPUT);
 
   BTSerial.begin(9600); // 블루투스 모듈 초기화
@@ -64,14 +66,7 @@ void loop() {
     }
   }
   
-  sendRFID();
-  if(runnn%30== 0){
-    runnn = 1;
-    Serial.println();
-  }
-    
-  Serial.print(runnn++);
-  delay(100);
+  sendRFID();    
 }
 
 void sendRFID() { // RFID가 읽히면 앱으로 RFID값을 전송한다.
@@ -99,7 +94,7 @@ void isOpenDoor(String msg) {
   Serial.println(String("msg: ") + msg);
   if (msg == "true") {
     digitalWrite(led_green, HIGH);
-    digitalWrite(led_red, LOW);
+//    digitalWrite(led_red, LOW);
     
     Serial.println("등록된 카드입니다.");
     lcd.setCursor(0,0);
@@ -109,7 +104,7 @@ void isOpenDoor(String msg) {
     delay(500);
   } else {
     digitalWrite(led_green, LOW);
-    digitalWrite(led_red, HIGH);
+//    digitalWrite(led_red, HIGH);
     
     Serial.println("넌 도대체 누구냐?");
     lcd.setCursor(0, 0);
@@ -125,5 +120,5 @@ void isOpenDoor(String msg) {
   
   delay(5000);
   digitalWrite(led_green, LOW);
-  digitalWrite(led_red, LOW);
+//  digitalWrite(led_red, LOW);
 }
