@@ -193,22 +193,23 @@ public class MainActivity extends AppCompatActivity {
             btDB = new BluetoothDB(this); //update
             sqlDB = btDB.getWritableDatabase();
 
-            sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
-            ad.dismiss();
+            sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + data.id + "';");
+            if(ad != null)
+                ad.dismiss();
             showToast("등록 되셧습니다. " + rfid);
             isSignup = false;
-        } else { //로그인성공시
+        }
+        else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
-            ad.dismiss();
-            Log.i("test", "로그인 성공");
+
             Log.i("test", "받은 rfid값: " + rfid);
             Log.i("test", "등록된 rfid값: " + data.rfid);
             if (rfid.equals(data.rfid)) {
-                Log.i("test", "받은 rfid값: " + rfid);
-                Log.i("test", "등록된 rfid값: " + data.rfid);
+                sendData("true");
+                showToast("환영합니다.");
             } else {
                 sendData("false");
-                showToast("아두이노에게 열지마 ~~~~!!!");
+                showToast("who are you?");
             }
         }
     }

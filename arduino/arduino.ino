@@ -16,7 +16,7 @@ SoftwareSerial BTSerial(2, 3); //bluetooth module Tx:Digital 2 Rx: Digital 3
 
 
 //bluetooth
-byte buffer[1024];
+byte buffer[512];
 int bufferPosition; //버퍼에 기록할 위치
 //LCD
 LiquidCrystal_I2C lcd(0x27, 16, 2);
