@@ -42,15 +42,7 @@ public class MainActivity extends AppCompatActivity {
     String strLoginStatus;
     AlertDialog ad;
 
-    // Button btnSend;
-    // EditText edtSendMsg;
-    Button btnSend;
-    EditText edtSendMsg;
-    TextView tvReceive;
-
-    ImageView ivBT;
-    TextView tvSignup, tvLogin, tvLogout;
-
+    TextView tvMsg;
     Button btnLogin, btnSignup, btnEtc;
     ImageView ivCard;
     TextView tvBluetoothEx;
@@ -82,11 +74,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UserData data = DataManager.getInstance().getUserData(); //현재데이타
-//        data.id = strId;
-//        data.password = strPassword;
-//        data.user_name = strUserName;
-//        data.rfid = strRFID;
 
         ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -94,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
         ivCard = (ImageView) findViewById(R.id.ivCard);
-      //  tvMsg = (TextView) findViewById(R.id.tvMsg);
         tvBluetoothEx = (TextView) findViewById(R.id.tvBluetoothEx);
         btnEtc = (Button) findViewById(R.id.btnEtc);
 
@@ -129,16 +115,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        btnSend.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 시 메시지 통신을 할 수 있지만 현재는 보류......
-//            @Override
-//            public void onClick(View v) {
-//                String msg = edtSendMsg.getText().toString();
-////                tvMsg.setText(msg);
-//                sendData(msg);
-//                edtSendMsg.setText("");
-//            }
-//        });
-
         btnSignup.setOnClickListener(new View.OnClickListener() { //회원가입
             @Override
             public void onClick(View v) {
@@ -163,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     } //onCreate End
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //승인요청 수락시 메서드 실행
@@ -206,34 +181,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     void checkRFID(String rfid) { //회원가입한 후의 카드등록, 로그인한 후의 카드등록
+        sqlDB = btDB.getWritableDatabase();
+        Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
+
 
         if (isSignup) { //회원가입성공시
-
-
-            sqlDB = btDB.getWritableDatabase();
-            Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
             cursor.moveToLast();
             UserData data = DataManager.getInstance().getUserData();
-
             String id = data.id;
-
-            Log.i("test", "회원 가입 성공");
             Log.i("test", "등록할 rfid값: " + rfid);
             data.rfid = rfid;
-            Log.i("test","등록된 rfid값: "+data.rfid);
+            Log.i("test", "등록된 rfid값: " + data.rfid);
 
             sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
             ad.dismiss();
-            showToast("등록 되셧습니다. "+rfid);
+            showToast("등록 되셧습니다. " + rfid);
             isSignup = false;
-
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
             Log.i("test","로그인 성공");
-            Log.i("test","받은 rfid값: "+rfid);
-            Log.i("test","등록된 rfid값: "+data.rfid);
-
-            if(rfid.equals(data.rfid)){
+            Log.i("test", "받은 rfid값: " + rfid);
+            Log.i("test", "등록된 rfid값: " + data.rfid);
+            if (rfid.equals(data.rfid)) {
                 sendData("true");
                 showToast("아두이노에게 열라고 명령함");
             } else {
@@ -241,8 +210,6 @@ public class MainActivity extends AppCompatActivity {
                 showToast("아두이노에게 열지마 ~~~~!!!");
             }
         }
-
-
     }
 
     void createCard() { //신규카드 등록
@@ -408,12 +375,12 @@ public class MainActivity extends AppCompatActivity {
             mOutputStream = mSocket.getOutputStream(); //송신 //ex led 조종
             mInputStream = mSocket.getInputStream(); //수신 //ex 온도습도 값
             beginListenForData(); //
-            ivBluetooth.setImageResource(R.drawable.bluetooth_icon);
+            ivBluetooth.setImageResource(R.drawable.bluetooth);
             tvBluetoothEx.setText("");
         } catch (Exception e) {
             // showToast("블루투스 연결 중 오류가 발생하였습니다");
             tvBluetoothEx.setText("블루투스 연결 중 요류가 발생하였습니다.\n다시한번 연결을 시도해주세요");
-            ivBluetooth.setImageResource(R.drawable.bluetooth_grayicon);
+            ivBluetooth.setImageResource(R.drawable.bluetooth_gray);
         }
     }
 
