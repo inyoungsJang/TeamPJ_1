@@ -14,7 +14,7 @@ public class SettingActivity extends AppCompatActivity {
     //    public class SettingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     //    static final String[] LIST_SET = {"도움말", "개발자 버전", "계정정보", "비밀번호 변경"};
 //    View view = View.inflate(R.layout.)
-    Button btnHelp, btnInformation, btnLockPassword, btnVersion;
+    Button btnHelp, btnInformation, btnLockPassword, btnWithdrawal;
 
 
     @Override
@@ -34,7 +34,7 @@ public class SettingActivity extends AppCompatActivity {
         btnHelp = (Button) findViewById(R.id.btnHelp);
         btnInformation = (Button) findViewById(R.id.btnInformation);
         btnLockPassword = (Button) findViewById(R.id.btnLockPassword);
-        //  btnVersion = (Button) findViewById(R.id.btnVersion);
+        btnWithdrawal = (Button)findViewById(R.id.btnWithdrawal);
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,14 +59,14 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(mIntent3);
             }
         });
+        btnWithdrawal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mIntent4 = new Intent(getApplicationContext(), WithdrawlActivity.class);
+                startActivity(mIntent4);
+            }
+        });
 
-//        btnVersion.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent mIntent4 = new Intent(getApplicationContext(), VersionActivity.class);
-//                startActivity(mIntent4);
-//            }
-//        });
     }
 
     @Override
@@ -79,23 +79,3 @@ public class SettingActivity extends AppCompatActivity {
     }
 }
 
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        if(position == 0){
-//            Intent mIntent1 = new Intent(SettingActivity.this, HelpActivity.class);
-//            startActivity(mIntent1);
-//        }
-//        if(position == 1){
-//            Intent mIntent2 = new Intent(SettingActivity.this, VersionActivity.class);
-//            startActivity(mIntent2);
-//        }
-//        if(position == 2){
-//            Intent mIntent3 = new Intent(SettingActivity.this, InformationActivity.class);
-//            startActivity(mIntent3);
-//        }
-//        if(position == 3){
-//            Intent mIntent4 = new Intent(SettingActivity.this, LockPasswordActivity.class);
-//            startActivity(mIntent4);
-//        }
-//    }
-//}

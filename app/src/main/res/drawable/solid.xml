@@ -3,7 +3,7 @@
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:color="@color/colorsolid"
+    android:color="@color/colorSolid"
     tools:targetApi="lollipop">
 
     <item android:state_focused="false" android:state_pressed="false">

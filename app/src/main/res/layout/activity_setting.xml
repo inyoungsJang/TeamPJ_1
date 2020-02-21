@@ -61,12 +61,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <TextView
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="50dp"
             android:text="버전정보"
-            android:gravity="start|center"
-            style="?android:borderlessButtonStyle"/>
+            android:gravity="start|center" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +85,7 @@
             android:textColor="#7C7C7C"
             android:background="#EBEBEB"/>
         <Button
-            android:id="@+id/btnwithdrawal"
+            android:id="@+id/btnWithdrawal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="회원탈퇴"
