@@ -36,7 +36,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvReadCard, tvTextReadCard;
+    TextView tvTextReadCard;
     ImageView ivRFID, ivBluetooth;
     int loginSuccess;
     String strLoginStatus;
@@ -218,7 +218,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder_createCard = new AlertDialog.Builder(this);
         builder_createCard.setTitle("");
         dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog_createcard, null);
-        tvReadCard = (TextView) dialogView.findViewById(R.id.tvReadCard);
         //   mDevices = bluetoothAdapter.getBondedDevices();
         //   mPairedDeviceCount = mDevices.size();
         btDB = new BluetoothDB(this); //update
