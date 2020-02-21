@@ -190,6 +190,9 @@ public class MainActivity extends AppCompatActivity {
             data.rfid = rfid;
             Log.i("test", "등록된 rfid값: " + data.rfid);
 
+            btDB = new BluetoothDB(this); //update
+            sqlDB = btDB.getWritableDatabase();
+
             sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + id + "';");
             ad.dismiss();
             showToast("등록 되셧습니다. " + rfid);
@@ -203,13 +206,9 @@ public class MainActivity extends AppCompatActivity {
             if (rfid.equals(data.rfid)) {
                 Log.i("test", "받은 rfid값: " + rfid);
                 Log.i("test", "등록된 rfid값: " + data.rfid);
-                if (rfid.equals(data.rfid)) {
-                    sendData("true");
-                    showToast("아두이노에게 열라고 명령함");
-                } else {
-                    sendData("false");
-                    showToast("아두이노에게 열지마 ~~~~!!!");
-                }
+            } else {
+                sendData("false");
+                showToast("아두이노에게 열지마 ~~~~!!!");
             }
         }
     }
