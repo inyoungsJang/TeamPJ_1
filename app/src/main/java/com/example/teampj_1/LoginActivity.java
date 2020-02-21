@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText edtId, edtPassword;
     TextView tvLogin;
     ImageView imgExit;
+    Button btnLogin, btnCancel;
 
     BluetoothDB btDB;
     SQLiteDatabase sqlDB;//로그인성공시 특정값을 메인에넘겨줌으로써 로그인되었다는 확인을 받음
@@ -32,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
         edtId = (EditText) findViewById(R.id.edtId);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
-        imgExit = (ImageView) findViewById(R.id.imgExit);
-        tvLogin = (TextView) findViewById(R.id.tvLogin);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("로그인");
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btDB = new BluetoothDB(this);
 
-        tvLogin.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String id = edtId.getText().toString();
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        imgExit.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
