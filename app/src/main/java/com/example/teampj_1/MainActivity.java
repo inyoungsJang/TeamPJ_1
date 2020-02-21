@@ -181,12 +181,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     void checkRFID(String rfid) { //회원가입한 후의 카드등록, 로그인한 후의 카드등록
-        sqlDB = btDB.getWritableDatabase();
-        Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL", null);
-
 
         if (isSignup) { //회원가입성공시
-            cursor.moveToLast();
+
             UserData data = DataManager.getInstance().getUserData();
             String id = data.id;
             Log.i("test", "등록할 rfid값: " + rfid);
@@ -199,15 +196,20 @@ public class MainActivity extends AppCompatActivity {
             isSignup = false;
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
-            Log.i("test","로그인 성공");
+            ad.dismiss();
+            Log.i("test", "로그인 성공");
             Log.i("test", "받은 rfid값: " + rfid);
             Log.i("test", "등록된 rfid값: " + data.rfid);
             if (rfid.equals(data.rfid)) {
-                sendData("true");
-                showToast("아두이노에게 열라고 명령함");
-            } else {
-                sendData("false");
-                showToast("아두이노에게 열지마 ~~~~!!!");
+                Log.i("test", "받은 rfid값: " + rfid);
+                Log.i("test", "등록된 rfid값: " + data.rfid);
+                if (rfid.equals(data.rfid)) {
+                    sendData("true");
+                    showToast("아두이노에게 열라고 명령함");
+                } else {
+                    sendData("false");
+                    showToast("아두이노에게 열지마 ~~~~!!!");
+                }
             }
         }
     }
@@ -334,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
                                     handler.post(new Runnable() { //아두이노에 작성한 전송부분을 수신하여 작업할 곳
                                         @Override
                                         public void run() { //수신된 문자열 데이터에 대한 처리작업
-                                            Log.i("test", "데이터 수신:"+data);
+                                            Log.i("test", "데이터 수신:" + data);
                                             checkRFID(data);
                                         }
                                     });
@@ -358,9 +360,9 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             mOutputStream.write(msg.getBytes()); //문자 전송
-            Log.i("test", "문자전송: "+ msg);
+            Log.i("test", "문자전송: " + msg);
         } catch (Exception e) {
-            Log.i("test", "문자전송 실패"+ msg);
+            Log.i("test", "문자전송 실패" + msg);
             showToast("데이터 전송 중 오류가 발생하였습니다");
         }
     }

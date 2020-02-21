@@ -29,9 +29,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);   // Create MFRC522 instance
 //int led_red = 8;
 int led_green = 7;
 int buzzer = 6;
-
-int runnn = 1;
 String strRFID = "";
+boolean isOpen = false;
 
 void setup() {
   lcd.init(); // I2C LC를 초기화
@@ -62,10 +61,11 @@ void loop() {
       String msg = String((char*)buffer);
       //      Serial.print("받은 msg: ");
       //      Serial.println(msg);
-      isOpenDoor(msg);
+      if(!isOpen){
+        isOpenDoor(msg);
+      }      
     }
-  }
-  
+  }  
   sendRFID();    
 }
 
@@ -83,13 +83,16 @@ void sendRFID() { // RFID가 읽히면 앱으로 RFID값을 전송한다.
     //    Serial.print(mfrc522.uid.uidByte[i]);
     //    Serial.print("/");
   }
+  
   Serial.println(strRFID);
   strRFID = strRFID+'\n'; //전송할떄는 \n을 추가해야함.
   BTSerial.print(strRFID);
   strRFID = "";
+  delay(1500);
 }
 
 void isOpenDoor(String msg) {
+  isOpen = true;
   lcd.clear();
   Serial.println(String("msg: ") + msg);
   if (msg == "true") {
@@ -119,6 +122,7 @@ void isOpenDoor(String msg) {
   bufferPosition = 0;
   
   delay(5000);
+  isOpen = false;
   digitalWrite(led_green, LOW);
 //  digitalWrite(led_red, LOW);
 }
