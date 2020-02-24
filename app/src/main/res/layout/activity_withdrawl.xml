@@ -22,6 +22,7 @@
             android:background="@drawable/border"
             android:textColor="#000000"/>
         <TextView
+            android:layout_marginLeft="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="위 아이디가 탈퇴 처리 됩니다."
@@ -38,6 +39,7 @@
             android:background="@drawable/border2"/>
 
         <TextView
+            android:layout_marginLeft="3dp"
             android:id="@+id/tvLostPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

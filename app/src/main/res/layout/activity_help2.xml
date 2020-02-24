@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelpActivity"
     android:padding="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".HelpActivity">
 
     <TextView
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.teampj_1">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -12,15 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FindAccountActivity"></activity>
+        <activity android:name=".LockPasswordCheckActivity"></activity>
+        <activity android:name=".HelpActivity" />
+        <activity android:name=".FindAccountIDActivity" />
+        <activity android:name=".FindAccountActivity" />
         <activity android:name=".WithdrawlActivity" />
         <activity android:name=".NameChangeActivity" />
         <activity android:name=".PasswordChangeActivity" />
         <activity android:name=".Intro" />
         <activity android:name=".LockPasswordActivity" />
-        <activity android:name=".VersionActivity" />
         <activity android:name=".InformationActivity" />
-        <activity android:name=".HelpActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".LogoutActivity" />
         <activity android:name=".LoginActivity" />
