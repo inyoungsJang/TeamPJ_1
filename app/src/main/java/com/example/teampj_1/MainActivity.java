@@ -165,15 +165,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REQUEST_SIGNUP:
                 if (resultCode == 100) {
-
-                    /*TODO: 계정 성공 시 즉시 로그인
-                     * 1. 로그인을 해준다.
-                     * 2. 카드 등록 다이얼로그를 출력한다.*/
                     isSignup = true;
                     createCard();
 
                 } else {
-                    showToast("계정 생성 취소하였습니다.");
+
                 }
                 break;
         }
@@ -246,9 +242,6 @@ public class MainActivity extends AppCompatActivity {
                 // TODO: 2020-02-07 로그아웃시 ??값을보냄
             }
         });
-
-
-        // TODO: 2020-01-28 RFID값을 DB에 저장해야함
         builder_createCard.setView(dialogView);
         builder_createCard.setCancelable(false);
         ad = builder_createCard.create();

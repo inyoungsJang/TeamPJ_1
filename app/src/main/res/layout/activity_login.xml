@@ -25,6 +25,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/border"
+        android:inputType="textPassword"
         android:hint="PASSWORD"
         android:padding="10dp" />
 
