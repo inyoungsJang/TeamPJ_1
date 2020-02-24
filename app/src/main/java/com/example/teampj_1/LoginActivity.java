@@ -17,15 +17,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class LoginActivity extends AppCompatActivity {
     EditText edtId, edtPassword;
-    TextView tvLogin;
-    ImageView imgExit;
     Button btnLogin, btnCancel;
 
     BluetoothDB btDB;
     SQLiteDatabase sqlDB;//로그인성공시 특정값을 메인에넘겨줌으로써 로그인되었다는 확인을 받음
-    private int loginSuccess;
+    //private int loginSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +56,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                loginSuccess = 0;
-                intent.putExtra("piLOGIN", loginSuccess);
                 setResult(101, intent);
                 finish(); //현재창 종료하기
             }
@@ -80,16 +78,10 @@ public class LoginActivity extends AppCompatActivity {
                 strRFID = cUser.getString(3);
 
                 if (id.equals(strId) && password.equals(strPassword)) { //동일하면
-                    loginSuccess = 1;
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("piLOGIN", loginSuccess);
-//                            startActivity(intent,);
                     setResult(100, intent);
                     UserData data = DataManager.getInstance().getUserData();
-                    data.id = strId;
-                    data.password = strPassword;
-                    data.user_name = strUserName;
-                    data.rfid = strRFID;
+                    DataManager.getInstance().setUserData(strId, strPassword, strUserName, strRFID);
                     finish(); //현재창 종료하기
                 } else {
                     showToast("비밀번호를 다시한번 확인해주세요.");

@@ -10,19 +10,13 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,12 +87,13 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (StateManager.getInstance().isLogin == false) {  //로그인 전
+                if (StateManager.getInstance().getIsLogin() == false) {  //로그인 전
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivityForResult(intent, REQUEST_LOGIN);
                 } else {
                     showToast("로그아웃되었습니다");
-                    StateManager.getInstance().isLogin = true;
+                    StateManager.getInstance().setIsLogin(false);
+
                     btnLogin.setText("로그인");
                 }
             }
@@ -152,18 +147,18 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == 100) {
                     showToast("로그인하였습니다.");
                     btnLogin.setText("로그아웃");
-                    Intent intent = getIntent();
-                    StateManager.getInstance().isLogin = true;
+                    Log.i("test","REQUEST_LOGIN: 로그인 성공");
+                    StateManager.getInstance().setIsLogin(true);
                 } else if (resultCode == 101) {
-                    //showToast("로그인 실패");
                     btnLogin.setText("로그인");
-                    StateManager.getInstance().isLogin = false;
-                    DataManager.getInstance().Logout();
+                    Log.i("test","REQUEST_LOGIN: 로그인 취소");
+                    StateManager.getInstance().setIsLogin(false);
                 }
                 break;
             case REQUEST_SIGNUP:
                 if (resultCode == 100) {
                     isSignup = true;
+                    Log.i("test","Sign Up ");
                     createCard();
 
                 } else {
@@ -191,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
             if (ad != null)
                 ad.dismiss();
             showToast("등록 되셧습니다. " + rfid);
+            sendData("signup");
             isSignup = false;
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
@@ -224,12 +220,11 @@ public class MainActivity extends AppCompatActivity {
         builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //showToast("카드를 등록하였습니다");
-//                Intent getIntent = getIntent();
-//                loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
-                if (StateManager.getInstance().isLogin) {
+
+                boolean isLogin = StateManager.getInstance().getIsLogin();
+                if (isLogin) {
                     // tvLogin.setText("LogOut");
-                    Log.i("test", "로그인성공할시 값이 1있어야햄" + StateManager.getInstance().isLogin);
+                    Log.i("test", "로그인성공: " + isLogin);
                     //  finish();
                     // TODO: 2020-02-07 재연결 막아야함
                     btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update

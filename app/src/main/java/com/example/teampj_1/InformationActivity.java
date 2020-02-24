@@ -29,7 +29,7 @@ public class InformationActivity extends AppCompatActivity {
 
         String id = DataManager.getInstance().getUserData().id;
         String name = DataManager.getInstance().getUserData().user_name;
-        if (StateManager.getInstance().isLogin) {
+        if (StateManager.getInstance().getIsLogin()) {
             tvShowId.setText(id);
             tvShowName.setText(name);
             btnPassWordChange.setEnabled(true);
