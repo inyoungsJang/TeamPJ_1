@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,11 @@ public class WithdrawlActivity extends AppCompatActivity {
         btnCancel = (Button) findViewById(R.id.btnCancel);
         WithdrawalCheck = (CheckBox) findViewById(R.id.WithdrawalCheck);
 
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        setTitle("회원탈퇴");
+
         Boolean isLogin = StateManager.getInstance().getIsLogin();
 
 
@@ -57,7 +64,6 @@ public class WithdrawlActivity extends AppCompatActivity {
         }
 
         edtWithdrawalPassword.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 dataPassword = DataManager.getInstance().getUserData().password;
@@ -102,11 +108,7 @@ public class WithdrawlActivity extends AppCompatActivity {
                 }
             }
         });
-        setContentView(R.layout.activity_withdrawl);
-        tvLostPassword = (TextView)findViewById(R.id.tvLostPassword);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        setTitle("회원탈퇴");
+
 
         tvLostPassword.setOnClickListener(new View.OnClickListener() {
             @Override
