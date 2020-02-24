@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+
 import android.view.MenuItem;
 
 public class PasswordChangeActivity extends AppCompatActivity {
@@ -154,7 +155,8 @@ public class PasswordChangeActivity extends AppCompatActivity {
             }
         });
     }//on Create END
-   }
+
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch ((item.getItemId())) {
