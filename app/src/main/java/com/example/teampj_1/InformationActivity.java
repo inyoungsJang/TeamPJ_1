@@ -7,38 +7,44 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.teampj_1.R;
 
 public class InformationActivity extends AppCompatActivity {
 
-    Button btnPassWordChange, btnNameChange;
+    Button btnPassWordChange;
+    TextView tvShowId, tvShowName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
+        tvShowId = (TextView) findViewById(R.id.tvShowId);
+        tvShowName = (TextView) findViewById(R.id.tvShowName);
 
         setTitle("내 정보 수정");
 
-        btnPassWordChange = (Button)findViewById(R.id.btnPasswordChange);
-        btnNameChange = (Button)findViewById(R.id.btnNameChange);
+        btnPassWordChange = (Button) findViewById(R.id.btnPasswordChange);
+
+        String id = DataManager.getInstance().getUserData().id;
+        String name = DataManager.getInstance().getUserData().user_name;
+        if (StateManager.getInstance().isLogin) {
+            tvShowId.setText(id);
+            tvShowName.setText(name);
+            btnPassWordChange.setEnabled(true);
+        } else {
+            tvShowId.setText("로그인이 필요합니다.");
+            tvShowName.setText("이름");
+            btnPassWordChange.setEnabled(false);
+        }
 
         btnPassWordChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent passwordIntent = new Intent(getApplicationContext(), PasswordChangeActivity.class);
                 startActivity(passwordIntent);
-
-            }
-        });
-        btnNameChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent nameIntent = new Intent(getApplicationContext(), NameChangeActivity.class);
-                startActivity(nameIntent);
             }
         });
     }
-
 }

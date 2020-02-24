@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvTextReadCard;
     ImageView ivRFID, ivBluetooth;
-    int loginSuccess;
+    //int loginSuccess;
     String strLoginStatus;
     AlertDialog ad;
 
@@ -90,20 +90,16 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Intro.class); //로딩화면
         startActivity(intent);
 
-        Intent getIntent = getIntent();
-        loginSuccess = getIntent.getIntExtra("piLOGIN", 0);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (loginSuccess == 0) {  //로그인 전
+                if (StateManager.getInstance().isLogin == false) {  //로그인 전
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivityForResult(intent, REQUEST_LOGIN);
                 } else {
                     showToast("로그아웃되었습니다");
-                    loginSuccess = 0;
+                    StateManager.getInstance().isLogin = true;
                     btnLogin.setText("로그인");
-
                 }
             }
         });
@@ -156,11 +152,13 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == 100) {
                     showToast("로그인하였습니다.");
                     btnLogin.setText("로그아웃");
-                    loginSuccess = 1;
+                    Intent intent = getIntent();
+                    StateManager.getInstance().isLogin = true;
                 } else if (resultCode == 101) {
                     //showToast("로그인 실패");
                     btnLogin.setText("로그인");
-                    loginSuccess = 0;
+                    StateManager.getInstance().isLogin = false;
+                    DataManager.getInstance().Logout();
                 }
                 break;
             case REQUEST_SIGNUP:
@@ -190,12 +188,11 @@ public class MainActivity extends AppCompatActivity {
             sqlDB = btDB.getWritableDatabase();
 
             sqlDB.execSQL("UPDATE bluetoothUserTBL SET rfid='" + rfid + "' WHERE id='" + data.id + "';");
-            if(ad != null)
+            if (ad != null)
                 ad.dismiss();
             showToast("등록 되셧습니다. " + rfid);
             isSignup = false;
-        }
-        else { //로그인성공시
+        } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
 
             Log.i("test", "받은 rfid값: " + rfid);
@@ -230,9 +227,9 @@ public class MainActivity extends AppCompatActivity {
                 //showToast("카드를 등록하였습니다");
 //                Intent getIntent = getIntent();
 //                loginSuccess = getIntent.getIntExtra("piLOGINSUCCESS", 0);
-                if (loginSuccess == 1) {
+                if (StateManager.getInstance().isLogin) {
                     // tvLogin.setText("LogOut");
-                    Log.i("test", "로그인성공할시 값이 1있어야햄" + loginSuccess);
+                    Log.i("test", "로그인성공할시 값이 1있어야햄" + StateManager.getInstance().isLogin);
                     //  finish();
                     // TODO: 2020-02-07 재연결 막아야함
                     btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update
