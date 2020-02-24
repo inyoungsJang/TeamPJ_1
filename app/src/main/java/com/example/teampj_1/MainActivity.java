@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_ENABLE_BT = 100;
     static final int REQUEST_LOGIN = 200;
     static final int REQUEST_SIGNUP = 300;
+    static final int REQUEST_WITHDRAW = 400;
 
     int mPairedDeviceCount = 0;
     Set<BluetoothDevice> mDevices;
@@ -84,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Intro.class); //로딩화면
         startActivity(intent);
 
+//        Intent withIntent = getIntent();
+//        if (getIntent() != null) {
+//            String result = withIntent.getStringExtra("withdraw");
+//            if (result.equals("123")) {
+//                btnLogin.setText("로그인");
+//            }
+//        }
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showToast("로그아웃되었습니다");
                     StateManager.getInstance().setIsLogin(false);
-
                     btnLogin.setText("로그인");
                 }
             }
@@ -119,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_WITHDRAW);
             }
         });
 
@@ -147,18 +155,25 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == 100) {
                     showToast("로그인하였습니다.");
                     btnLogin.setText("로그아웃");
-                    Log.i("test","REQUEST_LOGIN: 로그인 성공");
+                    Log.i("test", "REQUEST_LOGIN: 로그인 성공");
                     StateManager.getInstance().setIsLogin(true);
                 } else if (resultCode == 101) {
                     btnLogin.setText("로그인");
-                    Log.i("test","REQUEST_LOGIN: 로그인 취소");
+                    Log.i("test", "REQUEST_LOGIN: 로그인 취소");
                     StateManager.getInstance().setIsLogin(false);
+                }
+                break;
+            case REQUEST_WITHDRAW:
+                if (resultCode == 100) {
+                    btnLogin.setText("로그인");
+                } else {
+
                 }
                 break;
             case REQUEST_SIGNUP:
                 if (resultCode == 100) {
                     isSignup = true;
-                    Log.i("test","Sign Up ");
+                    Log.i("test", "Sign Up ");
                     createCard();
 
                 } else {

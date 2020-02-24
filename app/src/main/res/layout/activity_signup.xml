@@ -15,10 +15,12 @@
 
         <EditText
             android:id="@+id/edtId"
+            android:inputType=""
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/border"
+            android:privateImeOptions="defaultInputmode=english"
             android:hint="ID"
             android:padding="10dp" />
 

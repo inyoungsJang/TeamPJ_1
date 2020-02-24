@@ -23,7 +23,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
     EditText edtNewPassword, edtNewPasswordCheck, edtGijonPassword;
     String newPasswordCheck, newPassword, gijonPassword;
     Button btnPasswordSave, btnCancel;
-    boolean result = false;
+
     SQLiteDatabase sqlDB;
     BluetoothDB btDB;
 
@@ -46,7 +46,6 @@ public class PasswordChangeActivity extends AppCompatActivity {
         edtNewPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -67,7 +66,6 @@ public class PasswordChangeActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 

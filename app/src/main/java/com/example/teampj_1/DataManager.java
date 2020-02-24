@@ -27,6 +27,7 @@ public class DataManager {
 
     void Logout(){
         setUserData("","","","");
+        StateManager.getInstance().setIsLogin(false);
     }
 }
 

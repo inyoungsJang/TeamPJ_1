@@ -15,10 +15,7 @@ class StateManager {
     }
 
     void setIsLogin(boolean isLogin){
-        Log.i("test","로그인 플래그 변경됨" + isLogin);
         this.isLogin = isLogin;
-        if(!isLogin)
-            DataManager.getInstance().Logout();
     }
 
     boolean getIsLogin()
