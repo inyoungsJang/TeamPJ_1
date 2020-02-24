@@ -72,8 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_weight="8"
-            android:text="0.1"/>
+            android:layout_weight="5"
+            android:text="0.1.0 ver"/>
     </LinearLayout>
 
         <TextView

@@ -7,15 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class HelpActivity extends AppCompatActivity {
+public class FindAccountIDActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help2);
+        setContentView(R.layout.activity_find_account_id);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setTitle("도움말");
+        setTitle("아이디 찾기");
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -7,15 +7,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class HelpActivity extends AppCompatActivity {
+public class LockPasswordCheckActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help2);
+        setContentView(R.layout.activity_lock_password_check);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        setTitle("도움말");
+        actionBar.hide(); // 타이틀바 가리기
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
