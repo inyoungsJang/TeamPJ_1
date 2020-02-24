@@ -21,5 +21,4 @@
         android:text="Team Member : 윤성렬, 김현경, 장인영, 김영수"
         android:textColor="#08435F"
         android:textStyle="bold"/>
-
 </LinearLayout>

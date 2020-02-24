@@ -18,6 +18,16 @@ public class DataManager {
         return userData;
     }
 
+    void setUserData(String id, String pwd, String name, String rfid){
+        userData.id = id;
+        userData.password = pwd;
+        userData.user_name = name;
+        userData.rfid = rfid;
+    }
+
+    void Logout(){
+        setUserData("","","","");
+    }
 }
 
 class UserData{

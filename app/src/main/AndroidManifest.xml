@@ -18,7 +18,6 @@
         <activity android:name=".FindAccountIDActivity" />
         <activity android:name=".FindAccountActivity" />
         <activity android:name=".WithdrawlActivity" />
-        <activity android:name=".NameChangeActivity" />
         <activity android:name=".PasswordChangeActivity" />
         <activity android:name=".Intro" />
         <activity android:name=".LockPasswordActivity" />
