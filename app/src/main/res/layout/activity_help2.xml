@@ -4,21 +4,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".HelpActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="우리의 'EasyDoor'이라는 어플은\nRFID 를 활용하여 남녀노소 누구나 편리하게\n도어락을 열 수 있습니다."
-        android:textStyle="bold"/>
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_marginTop="30dp"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="우리의 'EasyDoor'이라는 어플은\nRFID 를 활용하여 남녀노소 누구나 편리하게\n도어락을 열 수 있습니다."
+            android:textSize="15dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Team Member : 윤성렬, 김현경, 장인영, 김영수"
-        android:textColor="#08435F"
-        android:textStyle="bold"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="*아래 이용약관 출처 : 삼성페이 웨어러블용 이용약관"
+            android:textSize="8dp"
+            android:layout_marginBottom="5dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvHelp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="8dp" />
+        </ScrollView>
+
+    </LinearLayout>
 </LinearLayout>
