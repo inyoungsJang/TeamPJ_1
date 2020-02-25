@@ -17,6 +17,7 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/edtName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
@@ -37,16 +38,19 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvShowId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
+            android:text="회원님의 아이디는 아래와 같습니다." />
+
+        <ListView
+            android:id="@+id/listShowId"
             android:background="@drawable/border"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:gravity="center"
-            android:lines="2"
             android:padding="10dp"
-            android:text="회원님의 아이디는"
             android:textSize="15dp" />
 
 

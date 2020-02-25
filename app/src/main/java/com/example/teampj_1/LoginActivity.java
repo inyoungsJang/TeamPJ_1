@@ -22,6 +22,7 @@ import java.util.Date;
 public class LoginActivity extends AppCompatActivity {
     EditText edtId, edtPassword;
     Button btnLogin, btnCancel;
+    TextView tvGoLostId, tvGoLostPassword;
 
     BluetoothDB btDB;
     SQLiteDatabase sqlDB;//로그인성공시 특정값을 메인에넘겨줌으로써 로그인되었다는 확인을 받음
@@ -36,12 +37,30 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+        tvGoLostId = (TextView) findViewById(R.id.tvGoLostId);
+        tvGoLostPassword = (TextView) findViewById(R.id.tvGoLostPassword);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("로그인");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         btDB = new BluetoothDB(this);
+
+        tvGoLostPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FindAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tvGoLostId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FindAccountIDActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
