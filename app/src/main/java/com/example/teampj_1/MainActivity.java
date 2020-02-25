@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_ENABLE_BT = 100;
     static final int REQUEST_LOGIN = 200;
     static final int REQUEST_SIGNUP = 300;
-    static final int REQUEST_WITHDRAW = 400;
+    static final int REQUEST_SETTING = 400;
 
     int mPairedDeviceCount = 0;
     Set<BluetoothDevice> mDevices;
@@ -86,14 +86,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Intro.class); //로딩화면
         startActivity(intent);
 
- /*       Intent withIntent = getIntent();
-        if (withIntent != null) {
-            String result = withIntent.getStringExtra("withdraw");
-            if (result=="로그아웃") {
-                btnLogin.setText(result);
-                //phone  = intent.getStringExtra("tel"); 을 추가합니다.
-            }
-        }*/
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
-                startActivityForResult(intent, REQUEST_WITHDRAW);
+                startActivityForResult(intent, REQUEST_SETTING);
             }
         });
 
@@ -165,13 +157,6 @@ public class MainActivity extends AppCompatActivity {
                     StateManager.getInstance().setIsLogin(false);
                 }
                 break;
-            case REQUEST_WITHDRAW:
-                if (resultCode == 100) {
-                    btnLogin.setText("로그인");
-                } else {
-
-                }
-                break;
             case REQUEST_SIGNUP:
                 if (resultCode == 100) {
                     isSignup = true;
@@ -180,6 +165,13 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
 
+                }
+                break;
+            case REQUEST_SETTING:
+                if(!StateManager.getInstance().getIsLogin()){
+                    btnLogin.setText("로그인");
+                } else {
+                    btnLogin.setText("로그아웃");
                 }
                 break;
             case 101:
@@ -236,26 +228,25 @@ public class MainActivity extends AppCompatActivity {
         builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                showToast("등록을 취소하였습니다");
-            }
-        });
-        builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
 
-                boolean isLogin = StateManager.getInstance().getIsLogin();
-                if (isLogin) {
-                    // tvLogin.setText("LogOut");
-                    Log.i("test", "로그인성공: " + isLogin);
-                    //  finish();
-                    // TODO: 2020-02-07 재연결 막아야함
-                    btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update
-                } else {
-                    showToast("로그인을 먼저 해주세요.");
-                }
-                // TODO: 2020-02-07 로그아웃시 ??값을보냄
             }
         });
+//        builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                boolean isLogin = StateManager.getInstance().getIsLogin();
+//                if (isLogin) {
+//
+//                    Log.i("test", "로그인성공: " + isLogin);
+//
+//                    btDB.BluetoothUpdateRFIDDB("업데이트 끝"); //update
+//                } else {
+//                    showToast("로그인을 먼저 해주세요.");
+//                }
+//
+//            }
+//        });
         builder_createCard.setView(dialogView);
         builder_createCard.setCancelable(false);
         ad = builder_createCard.create();
