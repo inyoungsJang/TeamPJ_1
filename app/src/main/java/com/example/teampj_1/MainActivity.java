@@ -378,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
             tvBluetoothEx.setText("");
         } catch (Exception e) {
             // showToast("블루투스 연결 중 오류가 발생하였습니다");
-            tvBluetoothEx.setText("블루투스 연결 중 요류가 발생하였습니다.\n다시한번 연결을 시도해주세요");
+            tvBluetoothEx.setText("블루투스 연결 중 오류가 발생하였습니다.\n다시 한번 연결을 시도해주세요");
             ivBluetooth.setImageResource(R.drawable.bluetooth_gray);
         }
     }
