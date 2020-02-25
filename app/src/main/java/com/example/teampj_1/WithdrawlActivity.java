@@ -48,7 +48,6 @@ public class WithdrawlActivity extends AppCompatActivity {
         btnCancel = (Button) findViewById(R.id.btnCancel);
         WithdrawalCheck = (CheckBox) findViewById(R.id.WithdrawalCheck);
 
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         setTitle("회원탈퇴");
@@ -96,10 +95,14 @@ public class WithdrawlActivity extends AppCompatActivity {
                         DataManager.getInstance().Logout();
                         Toast.makeText(getApplicationContext(), "회원탈퇴 되셨습니다.", Toast.LENGTH_SHORT).show();
                         sqlDB.close();
+                    /*    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("withdraw","로그아웃");
+                        startActivity(intent);*/
+                    //    setResult(RESULT_OK);
 //                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                        intent.putExtra("withdraw","123");
-//                        startActivity(intent);
+//                        setResult(101, intent);
                         finish();
+
                     } else {
                         Toast.makeText(getApplicationContext(), "유의사항을 확인해주세요.", Toast.LENGTH_SHORT).show();
                     }

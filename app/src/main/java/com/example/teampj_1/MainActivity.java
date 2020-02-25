@@ -85,13 +85,14 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Intro.class); //로딩화면
         startActivity(intent);
 
-//        Intent withIntent = getIntent();
-//        if (getIntent() != null) {
-//            String result = withIntent.getStringExtra("withdraw");
-//            if (result.equals("123")) {
-//                btnLogin.setText("로그인");
-//            }
-//        }
+ /*       Intent withIntent = getIntent();
+        if (withIntent != null) {
+            String result = withIntent.getStringExtra("withdraw");
+            if (result=="로그아웃") {
+                btnLogin.setText(result);
+                //phone  = intent.getStringExtra("tel"); 을 추가합니다.
+            }
+        }*/
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +180,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                 }
+                break;
+            case 101:
+                btnLogin.setText("로그인");
+                Log.i("test", "REQUEST_LOGIN: 로그인 취소");
+                StateManager.getInstance().setIsLogin(false);
                 break;
         }
     } //onActivityResult END
