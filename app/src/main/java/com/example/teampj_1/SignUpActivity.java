@@ -24,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText edtId, edtPassword, edtName;
     Button btnSignup, btnCheckID, btnCancel;
     String id, password, rfid, name;
+    TextView tvCheckText;
 
     // SQLiteDatabase sqlDB;
     BluetoothDB btDB;
@@ -42,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity {
         btnCheckID = (Button) findViewById(R.id.btnCheckID);
         btnSignup = (Button) findViewById(R.id.btnSignup);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+        tvCheckText = (TextView) findViewById(R.id.tvCheckText);
+
         btDB = new BluetoothDB(this);
 
         ActionBar actionBar = getSupportActionBar();
@@ -59,14 +62,18 @@ public class SignUpActivity extends AppCompatActivity {
                     Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL where id ='" + id + "';", null); //동일한 계정이있는지 중복성 검사
                     if (cursor.moveToFirst()) {
                         check = false;
-                        btnCheckID.setBackgroundColor(Color.GRAY);
+                        btnCheckID.setBackgroundColor(Color.argb(55, 70, 70, 70)); //회색...?
                         btnCheckID.setTextColor(Color.BLACK);
+                        tvCheckText.setText("사용할 수 없는 아이디입니다.");
+                        tvCheckText.setTextColor(Color.RED);
 //                        showToast("사용할 수 없는 아이디입니다.");
                     } else {
                         check = true;
 //                        showToast("사용 가능한 아이디입니다.");
                         btnCheckID.setBackgroundColor(getResources().getColor(R.color.SignatureColorBlue));
                         btnCheckID.setTextColor(Color.WHITE);
+                        tvCheckText.setText("사용가능한 아이디입니다.");
+                        tvCheckText.setTextColor(getResources().getColor(R.color.SignatureColorBlue));
                     }
                 }
             }

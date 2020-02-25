@@ -15,14 +15,14 @@
 
         <EditText
             android:id="@+id/edtId"
-            android:inputType=""
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/border"
-            android:privateImeOptions="defaultInputmode=english"
             android:hint="ID"
-            android:padding="10dp" />
+            android:inputType=""
+            android:padding="10dp"
+            android:privateImeOptions="defaultInputmode=english" />
 
         <Button
             android:id="@+id/btnCheckID"
@@ -35,6 +35,13 @@
             android:textSize="17dp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvCheckText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="사용할 수 없는 아이디입니다"
+        android:textSize="12dp"
+        android:textColor="#ff0000"/>
 
     <EditText
         android:id="@+id/edtPassword"
@@ -43,8 +50,8 @@
         android:layout_marginTop="35dp"
         android:layout_marginBottom="35dp"
         android:background="@drawable/border"
-        android:inputType="textPassword"
         android:hint="PASSWORD"
+        android:inputType="textPassword"
         android:padding="10dp" />
 
     <EditText
