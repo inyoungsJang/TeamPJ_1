@@ -2,8 +2,10 @@ package com.example.teampj_1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -50,14 +52,27 @@ public class LockPasswordActivity extends AppCompatActivity {
         imgBtnDel = (ImageButton)findViewById(R.id.btnDel);
 
 
+        AlertDialog.Builder builder
+                = new AlertDialog.Builder(LockPasswordActivity.this);
+        builder.setTitle("NOTICE").setMessage("현재 개발 중입니다.");
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch ((item.getItemId())) {
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch ((item.getItemId())) {
+//            case android.R.id.home:
+//                finish();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

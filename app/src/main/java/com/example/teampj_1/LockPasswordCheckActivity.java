@@ -2,12 +2,17 @@ package com.example.teampj_1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 public class LockPasswordCheckActivity extends AppCompatActivity {
+
+    LinearLayout linearTop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +21,24 @@ public class LockPasswordCheckActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.hide(); // 타이틀바 가리기
+
+        linearTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+
+
     }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch ((item.getItemId())) {
-            case android.R.id.home:
-                finish();
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch ((item.getItemId())) {
+//            case android.R.id.home:
+//                finish();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }
