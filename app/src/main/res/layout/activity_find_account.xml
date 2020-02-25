@@ -14,42 +14,54 @@
 
 
         <EditText
-            android:padding="10dp"
+            android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="이름을 입력해주세요."
-            android:textSize="15dp"
             android:background="@drawable/border"
-            android:textColor="#000000"/>
+            android:hint="이름을 입력해주세요."
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textSize="15dp" />
 
         <EditText
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
+            android:id="@+id/edtId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border"
             android:hint="아이디를 입력해주세요."
-            android:textSize="15dp"
-            android:background="@drawable/border"/>
+            android:padding="10dp"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/tvLostID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="아이디를 잊으셨나요?"
-            android:textSize="12dp"
-            android:textColor="#1B6CA0"/>
+            android:textColor="#1B6CA0"
+            android:textSize="12dp" />
 
+        <TextView
+            android:id="@+id/tvShowPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/border"
+            android:gravity="center"
+            android:lines="2"
+            android:padding="10dp"
+            android:text="회원님의 비밀번호는"
+            android:textSize="15dp" />
 
         <Button
             android:id="@+id/btnAccountCheck"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="#008DE9"
-            android:textColor="#ffffff"
-            android:text="확인"/>
-
-
+            android:text="확인"
+            android:textColor="#ffffff" />
 
 
     </LinearLayout>
