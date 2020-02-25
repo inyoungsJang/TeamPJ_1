@@ -84,10 +84,6 @@
                     android:layout_marginTop="20dp"
                     android:src="@drawable/text6"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:src=""/>
 
 
 
