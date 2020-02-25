@@ -32,12 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvTextReadCard;
     ImageView ivRFID, ivBluetooth;
-    //int loginSuccess;
-    String strLoginStatus;
     AlertDialog ad;
-    //132
-
-    TextView tvMsg;
     Button btnLogin, btnSignup, btnEtc;
     ImageView ivCard;
     TextView tvBluetoothEx;
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     byte readBuffer[];
     int readBufferPosition;
     View dialogView;
-    boolean isSignup = false;
+    //boolean isSignup = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Intro.class); //로딩화면
         startActivity(intent);
 
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, REQUEST_LOGIN);
                 } else {
                     showToast("로그아웃되었습니다");
+                    ivCard.setImageResource(R.drawable.createcard_gray);
                     StateManager.getInstance().setIsLogin(false);
                     btnLogin.setText("로그인");
+
                 }
             }
         });
@@ -104,7 +100,12 @@ public class MainActivity extends AppCompatActivity {
         ivCard.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
             public void onClick(View v) {
-                createCard();
+                if (StateManager.getInstance().getIsLogin()) {
+                    createCard();
+                } else {
+                    Toast.makeText(MainActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        checkBluetooth();
         ivBluetooth.setOnClickListener(new View.OnClickListener() { // 블루투스 연결 할 기기 선택
             @Override
             public void onClick(View v) {
@@ -151,15 +153,17 @@ public class MainActivity extends AppCompatActivity {
                     btnLogin.setText("로그아웃");
                     Log.i("test", "REQUEST_LOGIN: 로그인 성공");
                     StateManager.getInstance().setIsLogin(true);
+                    ivCard.setImageResource(R.drawable.createcard9);
                 } else if (resultCode == 101) {
                     btnLogin.setText("로그인");
                     Log.i("test", "REQUEST_LOGIN: 로그인 취소");
+                    ivCard.setImageResource(R.drawable.createcard_gray);
                     StateManager.getInstance().setIsLogin(false);
                 }
                 break;
             case REQUEST_SIGNUP:
                 if (resultCode == 100) {
-                    isSignup = true;
+                    StateManager.getInstance().setIsSignup(true);
                     Log.i("test", "Sign Up ");
                     createCard();
 
@@ -168,10 +172,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_SETTING:
-                if(!StateManager.getInstance().getIsLogin()){
+                if (!StateManager.getInstance().getIsLogin()) {
                     btnLogin.setText("로그인");
+                    ivCard.setImageResource(R.drawable.createcard_gray);
                 } else {
                     btnLogin.setText("로그아웃");
+                    ivCard.setImageResource(R.drawable.createcard9);
                 }
                 break;
             case 101:
@@ -185,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     void checkRFID(String rfid) { //회원가입한 후의 카드등록, 로그인한 후의 카드등록
 
-        if (isSignup) { //회원가입성공시
+        if (StateManager.getInstance().getIsSignup()) { //회원가입성공시
 
             UserData data = DataManager.getInstance().getUserData();
             String id = data.id;
@@ -201,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 ad.dismiss();
             showToast("등록 되셧습니다. " + rfid);
             sendData("signup");
-            isSignup = false;
+            StateManager.getInstance().setIsSignup(false);
         } else { //로그인성공시
             UserData data = DataManager.getInstance().getUserData();
 
@@ -225,12 +231,15 @@ public class MainActivity extends AppCompatActivity {
         //   mPairedDeviceCount = mDevices.size();
         btDB = new BluetoothDB(this); //update
 
-        builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        if (!StateManager.getInstance().getIsSignup()) {
+            builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                }
+            });
+        }
+
 //        builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {
@@ -287,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (which == mPairedDeviceCount) { //카운트의 개수는 4개이고, 다이어로그의 인덱스4는 취소이다
-                        showToast("취소를 선택하였습니다");
+//                        showToast("취소를 선택하였습니다");
                     } else {
                         connectToSelectDevice(items[which].toString()); //선택한 장치와 연결시도 (페어링 작업)
                     }

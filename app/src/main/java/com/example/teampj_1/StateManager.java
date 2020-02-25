@@ -10,16 +10,24 @@ class StateManager {
     }
 
     private boolean isLogin = false;
+    private boolean isSignup = false;
 
     private StateManager() {
     }
 
-    void setIsLogin(boolean isLogin){
+    void setIsSignup(boolean isSignup) {
+        this.isSignup = isSignup;
+    }
+
+    boolean getIsSignup() {
+        return isSignup;
+    }
+
+    void setIsLogin(boolean isLogin) {
         this.isLogin = isLogin;
     }
 
-    boolean getIsLogin()
-    {
+    boolean getIsLogin() {
         return isLogin;
     }
 

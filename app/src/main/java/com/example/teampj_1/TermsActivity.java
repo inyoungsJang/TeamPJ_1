@@ -14,18 +14,17 @@ import java.io.InputStream;
 
 public class TermsActivity extends AppCompatActivity {
     TextView tvHelp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms);
-
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         setTitle("이용약관");
 
         tvHelp = (TextView) findViewById(R.id.tvHelp);
-
 
         InputStream inputStream = getResources().openRawResource(R.raw.help2); //
         try {
@@ -38,6 +37,7 @@ public class TermsActivity extends AppCompatActivity {
             System.err.println();
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch ((item.getItemId())) {

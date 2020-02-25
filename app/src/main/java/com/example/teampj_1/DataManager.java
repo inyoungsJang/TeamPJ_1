@@ -24,6 +24,9 @@ public class DataManager {
         userData.user_name = name;
         userData.rfid = rfid;
     }
+    void setSignData(String id,String pwd,String name){
+
+    }
 
     void Logout(){
         setUserData("","","","");
