@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -58,10 +59,14 @@ public class SignUpActivity extends AppCompatActivity {
                     Cursor cursor = sqlDB.rawQuery("SELECT id FROM bluetoothUserTBL where id ='" + id + "';", null); //동일한 계정이있는지 중복성 검사
                     if (cursor.moveToFirst()) {
                         check = false;
-                        showToast("사용할 수 없는 아이디입니다.");
+                        btnCheckID.setBackgroundColor(Color.GRAY);
+                        btnCheckID.setTextColor(Color.BLACK);
+//                        showToast("사용할 수 없는 아이디입니다.");
                     } else {
                         check = true;
-                        showToast("사용 가능한 아이디입니다.");
+//                        showToast("사용 가능한 아이디입니다.");
+                        btnCheckID.setBackgroundColor(getResources().getColor(R.color.SignatureColorBlue));
+                        btnCheckID.setTextColor(Color.WHITE);
                     }
                 }
             }

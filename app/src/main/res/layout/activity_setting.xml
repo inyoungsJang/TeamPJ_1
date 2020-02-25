@@ -11,87 +11,93 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="카테고리"
+            android:background="#EBEBEB"
             android:gravity="bottom"
-            android:textColor="#7C7C7C"
-            android:background="#EBEBEB"/>
-        <Button
-            android:id="@+id/btnHelp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="도움말"
-            android:gravity="start|center"
-            style="?android:borderlessButtonStyle"/>
-        <TextView
             android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="카테고리"
-            android:gravity="bottom"
-            android:textColor="#7C7C7C"
-            android:background="#EBEBEB"/>
+            android:text="사용자"
+            android:textColor="#7C7C7C" />
+
         <Button
             android:id="@+id/btnInformation"
+            style="?android:borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="내 정보"
             android:gravity="start|center"
-            style="?android:borderlessButtonStyle"/>
+            android:text="내 정보" />
+
         <Button
             android:id="@+id/btnLockPassword"
+            style="?android:borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="암호 설정"
             android:gravity="start|center"
-            style="?android:borderlessButtonStyle"/>
+            android:text="암호 설정" />
+
         <TextView
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="앱 정보"
+            android:background="#EBEBEB"
             android:gravity="bottom"
-            android:textColor="#7C7C7C"
-            android:background="#EBEBEB"/>
+            android:padding="10dp"
+            android:text="앱 정보"
+            android:textColor="#7C7C7C" />
+        <Button
+            android:id="@+id/btnTerms"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="start|center"
+            android:text="이용약관" />
+        <Button
+            android:id="@+id/btnHelp"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="start|center"
+            android:text="도움말" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <TextView
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="50dp"
-            android:text="버전정보"
-            android:gravity="start|center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:padding="10dp"
+                android:text="버전정보" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Ver. 0 . 1 . 0"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="5"
-            android:text="0.1.0 ver"/>
-    </LinearLayout>
-
-        <TextView
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="카테고리"
+            android:background="#EBEBEB"
             android:gravity="bottom"
-            android:textColor="#7C7C7C"
-            android:background="#EBEBEB"/>
+            android:padding="10dp"
+            android:text="카테고리"
+            android:textColor="#7C7C7C" />
+
         <Button
             android:id="@+id/btnWithdrawal"
+            style="?android:borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="회원탈퇴"
-            android:textColor="#CA0000"
             android:gravity="start|center"
-            style="?android:borderlessButtonStyle"/>
+            android:text="회원탈퇴"
+            android:textColor="#CA0000" />
 
     </LinearLayout>
 

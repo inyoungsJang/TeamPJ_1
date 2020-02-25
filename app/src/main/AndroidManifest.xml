@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LockPasswordCheckActivity"></activity>
+        <activity android:name=".TermsActivity"></activity>
+        <activity android:name=".LockPasswordCheckActivity" />
         <activity android:name=".HelpActivity" />
         <activity android:name=".FindAccountIDActivity" />
         <activity android:name=".FindAccountActivity" />
