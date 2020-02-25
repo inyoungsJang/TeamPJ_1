@@ -89,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(intent, REQUEST_LOGIN);
                 } else {
                     showToast("로그아웃되었습니다");
+                    ivCard.setImageResource(R.drawable.createcard_gray);
                     StateManager.getInstance().setIsLogin(false);
                     btnLogin.setText("로그인");
+
                 }
             }
         });
@@ -98,12 +100,12 @@ public class MainActivity extends AppCompatActivity {
         ivCard.setOnClickListener(new View.OnClickListener() { //카드등록
             @Override
             public void onClick(View v) {
-                if(StateManager.getInstance().getIsLogin()){
-                    createCard();    
+                if (StateManager.getInstance().getIsLogin()) {
+                    createCard();
                 } else {
                     Toast.makeText(MainActivity.this, "로그인이 필요합니다.", Toast.LENGTH_SHORT).show();
                 }
-                
+
             }
         });
 
@@ -151,9 +153,11 @@ public class MainActivity extends AppCompatActivity {
                     btnLogin.setText("로그아웃");
                     Log.i("test", "REQUEST_LOGIN: 로그인 성공");
                     StateManager.getInstance().setIsLogin(true);
+                    ivCard.setImageResource(R.drawable.createcard9);
                 } else if (resultCode == 101) {
                     btnLogin.setText("로그인");
                     Log.i("test", "REQUEST_LOGIN: 로그인 취소");
+                    ivCard.setImageResource(R.drawable.createcard_gray);
                     StateManager.getInstance().setIsLogin(false);
                 }
                 break;
@@ -168,10 +172,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_SETTING:
-                if(!StateManager.getInstance().getIsLogin()){
+                if (!StateManager.getInstance().getIsLogin()) {
                     btnLogin.setText("로그인");
+                    ivCard.setImageResource(R.drawable.createcard_gray);
                 } else {
                     btnLogin.setText("로그아웃");
+                    ivCard.setImageResource(R.drawable.createcard9);
                 }
                 break;
             case 101:
@@ -225,12 +231,15 @@ public class MainActivity extends AppCompatActivity {
         //   mPairedDeviceCount = mDevices.size();
         btDB = new BluetoothDB(this); //update
 
-        builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        if (!StateManager.getInstance().getIsSignup()) {
+            builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                }
+            });
+        }
+
 //        builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {
