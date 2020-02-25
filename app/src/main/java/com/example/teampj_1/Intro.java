@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class Intro extends AppCompatActivity {
     ImageView ivD, ivEasy;
-    Animation ani_D, ani_Easy; //
+    Animation ani_D, ani_Easy; //13213213
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
