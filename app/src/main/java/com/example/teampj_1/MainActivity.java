@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         builder_createCard.setView(dialogView);
-        builder_createCard.setCancelable(false);
+      //  builder_createCard.setCancelable(false);
         ad = builder_createCard.create();
         ad.show();
     }
