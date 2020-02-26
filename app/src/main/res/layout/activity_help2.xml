@@ -8,43 +8,96 @@
     android:padding="20dp"
     tools:context=".HelpActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="우리의 'EasyDoor'이라는 어플은\nRFID 를 활용하여 남녀노소 누구나 편리하게\n도어락을 열 수 있습니다."
-            android:textSize="15dp"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="*아래 이용약관 출처 : 삼성페이 웨어러블용 이용약관"
-            android:textSize="8dp"
-            android:layout_marginBottom="5dp"/>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="8dp" />
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:src="@drawable/textbluetooth1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/textbluetooth2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/imghome" />
+
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:src="@drawable/text44"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/imghome2" />
+<!--      여기까지 ㅇㅅ          -->
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/textjoin" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:src="@drawable/text2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imghome2" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/text3" />
+<!--블루투스 회원가입 -->
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="330dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imgjoin" />
+
+
+
+
+
+
+
+
+
+            </LinearLayout>
+
         </ScrollView>
 
     </LinearLayout>
