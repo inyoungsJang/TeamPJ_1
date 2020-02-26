@@ -87,13 +87,6 @@
                     android:src="@drawable/imgjoin" />
 
 
-
-
-
-
-
-
-
             </LinearLayout>
 
         </ScrollView>

@@ -14,7 +14,7 @@ public class SettingActivity extends AppCompatActivity {
     //    public class SettingActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     //    static final String[] LIST_SET = {"도움말", "개발자 버전", "계정정보", "비밀번호 변경"};
 //    View view = View.inflate(R.layout.)
-    Button btnHelp, btnInformation, btnLockPassword, btnWithdrawal,btnTerms;
+    Button btnHelp, btnInformation, btnLockPassword, btnWithdrawal, btnTerms, btnFindPassword;
 
 
     @Override
@@ -34,8 +34,17 @@ public class SettingActivity extends AppCompatActivity {
         btnHelp = (Button) findViewById(R.id.btnHelp);
         btnInformation = (Button) findViewById(R.id.btnInformation);
         btnLockPassword = (Button) findViewById(R.id.btnLockPassword);
-        btnWithdrawal = (Button)findViewById(R.id.btnWithdrawal);
-        btnTerms=(Button)findViewById(R.id.btnTerms);
+        btnWithdrawal = (Button) findViewById(R.id.btnWithdrawal);
+        btnTerms = (Button) findViewById(R.id.btnTerms);
+        btnFindPassword = (Button) findViewById(R.id.btnFindPassword);
+
+        btnFindPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getApplicationContext(), FindAccountActivity.class);
+                startActivity(intent6);
+            }
+        });
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override

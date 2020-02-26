@@ -30,12 +30,20 @@
             android:text="내 정보" />
 
         <Button
+            android:id="@+id/btnFindPassword"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="start|center"
+            android:text="비밀번호 찾기" />
+
+        <Button
             android:id="@+id/btnLockPassword"
             style="?android:borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="start|center"
-            android:text="암호 설정" />
+            android:text="잠금 설정" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,6 +53,7 @@
             android:padding="10dp"
             android:text="앱 정보"
             android:textColor="#7C7C7C" />
+
         <Button
             android:id="@+id/btnTerms"
             style="?android:borderlessButtonStyle"
@@ -52,6 +61,7 @@
             android:layout_height="50dp"
             android:gravity="start|center"
             android:text="이용약관" />
+
         <Button
             android:id="@+id/btnHelp"
             style="?android:borderlessButtonStyle"
@@ -76,9 +86,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="Ver. 0 . 1 . 0"
-                android:layout_marginRight="10dp"/>
+                android:text="Ver. 0 . 1 . 0" />
         </LinearLayout>
 
         <TextView

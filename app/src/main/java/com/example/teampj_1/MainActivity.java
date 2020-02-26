@@ -5,16 +5,20 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +34,6 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView tvTextReadCard;
     ImageView ivRFID, ivBluetooth;
     AlertDialog ad;
     Button btnLogin, btnSignup, btnEtc;
@@ -69,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
         ivBluetooth = (ImageView) findViewById(R.id.ivBluetooth);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnSignup = (Button) findViewById(R.id.btnSignup);
-        tvTextReadCard = (TextView) findViewById(R.id.tvTextReadCard);
         ivRFID = (ImageView) findViewById(R.id.ivRFID);
         ivCard = (ImageView) findViewById(R.id.ivCard);
         tvBluetoothEx = (TextView) findViewById(R.id.tvBluetoothEx);
@@ -224,21 +226,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void createCard() { //신규카드 등록
-        AlertDialog.Builder builder_createCard = new AlertDialog.Builder(this);
-        builder_createCard.setTitle("");
+        //AlertDialog.Builder builder_createCard = new AlertDialog.Builder(this);
+       // builder_createCard.setTitle("");
         dialogView = (View) View.inflate(MainActivity.this, R.layout.dialog_createcard, null);
+        Dialog builder_createCard = new Dialog(this);
+        builder_createCard.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder_createCard.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+// sectionPopupMenuDialog.setContentView(R.layout.subview_mainsection_list_menu);
+
         //   mDevices = bluetoothAdapter.getBondedDevices();
         //   mPairedDeviceCount = mDevices.size();
-        btDB = new BluetoothDB(this); //update
+     //   btDB = new BluetoothDB(this); //update
 
-        if (!StateManager.getInstance().getIsSignup()) {
-            builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-        }
+//        if (!StateManager.getInstance().getIsSignup()) {
+//            builder_createCard.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                }
+//            });
+//        }
 
 //        builder_createCard.setPositiveButton("등록", new DialogInterface.OnClickListener() {
 //            @Override
@@ -256,10 +264,11 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        builder_createCard.setView(dialogView);
+        builder_createCard.setContentView(dialogView);
       //  builder_createCard.setCancelable(false);
-        ad = builder_createCard.create();
-        ad.show();
+        //ad = builder_createCard.create();
+        //ad.show();
+        builder_createCard.show();
     }
 
     void checkBluetooth() {

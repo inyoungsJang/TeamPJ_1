@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 
 public class PasswordChangeActivity extends AppCompatActivity {
     TextView tvNewPasswordCheck; //비밀번호 변경시 변경비밀번호와 값이 동일한지
+    TextView tvFindPassword;
     EditText edtNewPassword, edtNewPasswordCheck, edtGijonPassword;
     String newPasswordCheck, newPassword, gijonPassword;
     Button btnPasswordSave, btnCancel;
@@ -40,6 +42,7 @@ public class PasswordChangeActivity extends AppCompatActivity {
         setTitle("비밀번호 변경");
 
         tvNewPasswordCheck = (TextView) findViewById(R.id.tvNewPasswordCheck);
+        tvFindPassword = (TextView) findViewById(R.id.tvFindPassword);
         edtNewPassword = (EditText) findViewById(R.id.edtNewPassword);
         edtNewPasswordCheck = (EditText) findViewById(R.id.edtNewPasswordCheck);
         edtGijonPassword = (EditText) findViewById(R.id.edtGijonPassword);
@@ -150,6 +153,14 @@ public class PasswordChangeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "비밀번호변경을 취소하였습니다.", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        });
+
+        tvFindPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), FindAccountActivity.class);
+                startActivity(intent);
             }
         });
     }//on Create END

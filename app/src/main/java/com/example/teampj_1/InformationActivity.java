@@ -43,7 +43,7 @@ public class InformationActivity extends AppCompatActivity {
             btnPassWordChange.setEnabled(true);
         } else {
             tvShowId.setText("로그인이 필요합니다.");
-            tvShowName.setText("이름");
+            tvShowName.setText("");
             btnPassWordChange.setEnabled(false);
         }
 

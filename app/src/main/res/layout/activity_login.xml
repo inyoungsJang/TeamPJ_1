@@ -16,6 +16,7 @@
         android:layout_marginTop="35dp"
         android:background="@drawable/border"
         android:hint="ID"
+        android:privateImeOptions="defaultInputmode=english"
         android:padding="10dp" />
 
 
