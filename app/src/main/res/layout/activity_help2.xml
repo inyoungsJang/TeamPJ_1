@@ -63,9 +63,6 @@
                     android:layout_marginTop="30dp"
                     android:src="@drawable/textjoin" />
 <!--       02_1 title         -->
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/text4" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
