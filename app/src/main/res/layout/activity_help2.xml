@@ -57,12 +57,14 @@
                     android:src="@drawable/imghome2" />
 <!--      여기까지 ㅇㅅ          -->
 
+<!--      02 Title          -->
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_marginTop="30dp"
                     android:src="@drawable/textjoin" />
 <!--       02_1 title         -->
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="18dp"
@@ -80,14 +82,89 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="30dp"
                     android:src="@drawable/text3" />
-<!--블루투스 회원가입 -->
+<!--EasyDoor 회원가입 -->
                 <ImageView
                     android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="330dp"
                     android:layout_gravity="center"
                     android:src="@drawable/imgjoin" />
+<!--03 Title-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/title03" />
+<!--03_1 title-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:src="@drawable/title03_1" />
+<!--03_2 homepage-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imghome2" />
+<!--03_3ccc title-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/title03_03" />
 
+
+
+<!--03_4 login-->
+
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="330dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/login03_4" />
+
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:src="@drawable/title03_5"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/home0303" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/title04" />
+
+<!--카드를 기기에 가져다 대세요 문구-->
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:src="@drawable/title04_1" />
+
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="330dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img04_2" />
+
+
+<!--&lt;!&ndash;homepage&ndash;&gt;-->
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="500dp"-->
+<!--                    android:layout_marginTop="50dp"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:src="@drawable/imghome2" />-->
 
 
 
