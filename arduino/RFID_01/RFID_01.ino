@@ -3,10 +3,10 @@
 
 //RST 9   //리셋
 //SDA 10  //데이터를주고 받는
-//MOSI 11
-//MISO 12
-//SCK 13
-//GND GND
+//MOSI 11 // 마스터에서 보내면 슬레이브 받는다.
+//MISO 12 // 마스터가 받고 슬레이브 보낸다.
+//SCK 13 //클럭 지나가는 선
+//GND GND 
 #define RST_PIN         9           // Configurable, see typical pin layout above
 #define SS_PIN          10          // Configurable, see typical pin layout above
 

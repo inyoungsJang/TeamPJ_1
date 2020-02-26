@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showToast("로그아웃되었습니다");
                     ivCard.setImageResource(R.drawable.createcard_gray);
-                    StateManager.getInstance().setIsLogin(false);
+                    DataManager.getInstance().Logout();
                     btnLogin.setText("로그인");
 
                 }
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                     btnLogin.setText("로그인");
                     Log.i("test", "REQUEST_LOGIN: 로그인 취소");
                     ivCard.setImageResource(R.drawable.createcard_gray);
+
                     StateManager.getInstance().setIsLogin(false);
                 }
                 break;
