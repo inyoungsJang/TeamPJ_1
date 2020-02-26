@@ -8,6 +8,8 @@
     android:padding="20dp"
     tools:context=".HelpActivity">
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,14 +39,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="500dp"
-                    android:layout_marginTop="50dp"
+                   android:layout_marginTop="50dp"
                     android:src="@drawable/imghome" />
 
                 <ImageView
+                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/textbluetooth3" />
+                    android:src="@drawable/text44"/>
 
                 <ImageView
                     android:layout_width="270dp"
@@ -52,7 +54,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:src="@drawable/imghome2" />
-                <!--      여기까지 ㅇㅅ          -->
+<!--      여기까지 ㅇㅅ          -->
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -73,9 +75,24 @@
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/text6" />
+                    android:layout_height="40dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/text3" />
+<!--블루투스 회원가입 -->
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="330dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imgjoin" />
+
+
+
+
+
+
+
+
 
             </LinearLayout>
 
