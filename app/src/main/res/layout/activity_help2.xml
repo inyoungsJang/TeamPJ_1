@@ -116,11 +116,11 @@
 
 
 
-<!--03_4 login-->
+<!--03 EasyDoor 로그인하기-->
 
                 <ImageView
                     android:layout_marginTop="30dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="270dp"
                     android:layout_height="330dp"
                     android:layout_gravity="center"
                     android:src="@drawable/login03_4" />
@@ -140,7 +140,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="35dp"
                     android:src="@drawable/title04" />
 
 <!--카드를 기기에 가져다 대세요 문구-->
@@ -150,16 +150,16 @@
                     android:src="@drawable/title04_1" />
 
                 <ImageView
-                    android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="330dp"
+                    android:layout_height="370dp"
+                    android:layout_marginTop="60dp"
                     android:layout_gravity="center"
                     android:src="@drawable/img04_2" />
 <!--                비밀번호 변경하기-->
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:src="@drawable/title05" />
 <!--설정 > 내 정보를 클릭하세요-->
                 <ImageView
@@ -170,23 +170,87 @@
 
 
                 <ImageView
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="330dp"
+                    android:layout_height="230dp"
                     android:layout_gravity="center"
                     android:src="@drawable/img05_2" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/text05_3" />
+<!--비밀번호 변경페이지-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="350dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/imgpwchange" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/title06" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:src="@drawable/title06_1" />
 
                 <ImageView
                     android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:src="@drawable/text44"/>
+                    android:src="@drawable/text06"/>
 
+                <ImageView
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="215dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imgfindpw" />
 
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:src="@drawable/text06_1"/>
 
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:src="@drawable/textfindid"/>
 
+                <ImageView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="235dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imgfindid" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/title07" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:src="@drawable/text07" />
+
+                <ImageView
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="235dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/imgbye" />
 
 
             </LinearLayout>
